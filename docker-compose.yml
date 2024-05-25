@@ -1,0 +1,30 @@
+version: '3.9'
+
+services:
+  web:
+    build:
+      context: .
+    ports:
+      - 8080:8080
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      - DB_HOST=db
+
+  db:
+    image: postgres:alpine
+    volumes:
+      - pg_data:/var/lib/postgresql/data/
+      - ./sql/database.sql:/docker-entrypoint-initdb.d/database.sql
+    environment:
+      - POSTGRES_PASSWORD=default
+    healthcheck:
+      test: pg_isready -U pseudo -d pseudovote -t 0
+      interval: 1s
+      retries: 10
+    ports:
+      - 5432:5432
+
+volumes:
+  pg_data:
