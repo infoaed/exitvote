@@ -1,76 +1,39 @@
 #!/usr/bin/env python3
 
 from __init__ import __version__, LASTMODIFIED_UNIXTIME, LASTMODIFIED, LASTMODIFIED_DATE
-from util import read_lines, to_list, datetime_representation, already_passed, wait_until, run_at, create_choice_html
+from util import read_lines,  datetime_representation, already_passed, run_at, create_choice_html
 
-import asyncio, asyncpg, uvicorn, aiosmtplib, ssl
+import asyncio, asyncpg
 
 from starlette.applications import Starlette
-from starlette.routing import Route, Mount, get_name as get_endpoint_name
+from starlette.routing import Route, Mount
 from starlette.staticfiles import StaticFiles
 from starlette.middleware import Middleware
 from starlette.templating import Jinja2Templates
-
-from starlette.responses import Response, JSONResponse
+from starlette.responses import  JSONResponse
 from sse_starlette.sse import EventSourceResponse
 
 from os import walk
 from os import getenv
 from babel import Locale
-from asgi_babel import BabelMiddleware, gettext, current_locale, select_locale_by_request, BABEL
+from asgi_babel import BabelMiddleware, gettext, current_locale, select_locale_by_request
 
-import json, csv, re, regex, logging
+import json, re, regex, logging
 
 from dotenv import load_dotenv
 import random as pseudo_random
 from random import SystemRandom
 from pgpdump import AsciiData
 
-from datetime import datetime, timedelta
-from time import time
+from datetime import datetime
 from collections import namedtuple
-from dataclasses import dataclass
 
 from dateutil.parser import isoparse, parse
-from email.utils import formatdate
-from string import ascii_uppercase, digits, Template
-from email.message import EmailMessage
-from email.parser import Parser
-from email.policy import default
+
+from poll import poll_choices
+from exceptions import VoteRejectException
 
 pseudo_id = namedtuple('pseudo_id', ['pseudonym', 'code', 'cryptonym'])
-
-@dataclass
-class poll_choices:
-    """
-    Convenience data structure to keep those crazy regexes beside the poll options data itself.
-    """
-    title: str = ""
-    min: int = 0
-    max: int = 1
-    choices: list = None
-    ordered: bool = False
-
-    def regex(self):
-        r = r"\s*\d*[.)]?\s*(("
-        for i in range(len(self.choices)):
-            r += r"\d*[.)]?\s*" + self.choices[i] + (r"|" if i < len(self.choices)-1 else r"")
-        r += r")[ ]?[,]?[ ]?){%d,%d}\s*(;|$)" % (self.min, self.max)
-        return r
-            
-    def fuzzy_regex(self):
-        r = r"\s*\d*[.)]?\s*(("
-        for i in range(len(self.choices)):
-            r += r"\d*[.)]?\s*" + self.choices[i] + (r"|" if i < len(self.choices)-1 else r"")
-        r += r"){e<=2}[ ]?[,]?[ ]?){%d,%d}\s*(;|$)" % (self.min, self.max)
-        return r
-
-class VoteRejectException(Exception):
-    """
-    Dedicated exception for vote processing to simplify the logic.
-    """
-    def __init__(self, message):
-        super().__init__(message)
 
 def get_pseudonym_list(voter_count, word_list, cryptonyms = False, salt_amount = None):
     """
@@ -249,516 +212,6 @@ def data_state(label, data = {}, token = "?"):
     """
     return json.dumps(dict(state=label, data=data))
 
-async def start_voting(req):
-    """
-    Web entry point for creating a poll/an election.
-    """
-    if req.method == "POST":
-        body = dict(await req.form())
-        return EventSourceResponse(conduct_voting_process(req, body))
-    elif req.method == "GET":
-        return EventSourceResponse(conduct_voting_process(req))
-
-async def conduct_voting_process(req, body = None):
-    """
-    Tha main voting process routine will run on server until the voting is over and will provide real time data feed in EventSource format on audit dashboard. The feed consists of JSON formatted notes about changes in poll status. It takes POST request body as imput, if no request body is provided it will attempt to catch up with feed of already existing poll based on `token` parameter of request. Technically poll can fail if `create_poll` is not reached or successfully executed, but after that the process will run on autopilot up the end of voting process. If the connection is terminally dropped for some reason, one can connect to public audit dashboard `https://voting.host/audit/{token}` or using JSON event feed to continue auditing the process, which will provide you the same data except sent e-mails report, which is currently specific to the viewpoint of the creator of the poll.
-    """
-
-    bulletin_token = ""
-    bulletin_id = None
-
-    start = None
-    end = None
-    choices = None
-    choices_count = 0
-
-    voterlist_embargoed = False
-    pseudo_list = []
-    decrypted_voterlist = None
-    full_voterlist = None
-    use_public_key = "\n".join(public_key)
-    pgp_id = None
-    
-    try:
-        
-        if body:
-
-            generic_bulletin = 'generic_bulletin' in body
-            bulletin_link = body["bulletin_link"] if "bulletin_link" in body else "token"
-
-            if not generic_bulletin:
-                start = body['start_time']
-                end = body['end_time']
-        
-            bulletin_token = ""
-            if 'token' in req.path_params:
-                initial_token = req.path_params['token']
-            else:
-                initial_token = None
-            
-            yield data_state("init", {'timestamp': datetime_representation(), 'token': initial_token if initial_token is not None else "/.../"}, initial_token)
-
-            bulletin_title = body['bulletin_title']
-
-            if "bulletin_url" in body and len(body["bulletin_url"]) > 0:
-                bulletin_url = body["bulletin_url"]
-            else:
-                bulletin_url = None
-
-            if "bulletin_name" in body and len(body["bulletin_name"]) > 0:
-                initial_name = body["bulletin_name"]
-            else:
-                initial_name = None
-                
-            body = to_list(body, "voters")
-            body = to_list(body, "words")
-            
-            if not generic_bulletin:
-                
-                choices = body['choices']
-                choices_list = []
-                if choices is not None and len(choices) > 0:
-                    choices_list = json.loads(choices)
-                choices_count = len(choices_list)
-                
-            if "message" in body:
-                message = body["message"]
-            else:
-                message = ""
-            
-            default_pseudos = "default_pseudonyms" in body
-            dry_run = "dry_run" in body
-            provide_voterlist = "provide_voterlist" in body
-            encrypt_voterlist = "encrypt_voterlist" in body
-
-            voterhash_type = None
-            if provide_voterlist:
-                voterhash_type = "sha256"
-
-            if encrypt_voterlist:
-                if 'use_public_key' in body:
-                    use_public_key = body['use_public_key']
-                    
-            packets = list(AsciiData(use_public_key.encode('ascii')).packets())
-            pgp_id = packets[0].key_id.decode()
-            
-            reject_multi, personal_ballot, limit_choices, reject_invalid, reject_unlisted, mute_unlisted, block_unlisted, limit_invalid, limit_unlisted, limit_multi, encrypt_ballots = "reject_multi" in body, "personal_ballot" in body, "limit_choices" in body, "reject_invalid" in body, "reject_unlisted" in body, "mute_unlisted" in body, "block_unlisted" in body, "limit_invalid" in body, "limit_unlisted" in body, "limit_multi" in body, "encrypt_ballots" in body
-
-            salted = False
-            salt_amount = None
-            if "pseudonym_type" in body:
-                if body["pseudonym_type"] == "cryptonyms":
-                    salted = True
-                    salt_amount = 3 if "salt_amount" not in body else int(body["salt_amount"])
-                elif body["pseudonym_type"] == "pseudonyms":
-                    salted = False
-
-            if default_pseudos:
-                wl = "flowers"
-            elif "wordlist" in body:
-                wl = body["wordlist"]
-            else:
-                wl = "flowers"
-                
-            if wl == "flowers":
-                unique_words = flowers
-            elif wl == "islands":
-                unique_words = islands
-            elif wl == "animals":
-                unique_words = emojis
-            elif wl == "starwars":
-                unique_words = starwars
-            else:
-                unique_words = body["words"]
-                wl = "custom"
-
-            url = EMAIL_HOST
-            port = EMAIL_PORT
-            username = None
-            password = None
-            
-            if "server" in body and len(body["server"]) > 0:
-                url = body["server"]
-                if ":" in url:
-                    url, port = url.split(":", 1)
-                    url = url.strip()
-                    port = int(port.strip())
-            if "username" in body and len(body["username"]) > 0:
-                username = body["kasutaja"]
-            if "password" in body and len(body["password"]) > 0:
-                password = body["password"]
-
-            voter_list = []
-            if 'voters' in body:
-                voter_list = body['voters']
-            voter_count = len(voter_list)
-            
-            if voter_count > len(unique_words):
-                data = {"voters": voter_count, 'words': len(unique_words), 'message': 'Voter count exceeds amount of pseudonyms in list', 'timestamp': datetime_representation()}
-                yield data_state("error", data, initial_token)
-                await asyncio.sleep(5)
-                return
-            
-            if not EMAIL_NOLIMIT and not dry_run and url in LOCALHOSTS and voter_count > EMAIL_LIMIT:
-                data = {"voters": voter_count, 'message': f'Send large amounts (n > {EMAIL_LIMIT}) of e-mails by specifying SMTP server', 'timestamp': datetime_representation()}
-                yield data_state("error", data, initial_token)
-                await asyncio.sleep(5)
-                return
-            
-            if not dry_run:
-                required_list = ['${pseudonym}', 'From:', 'To:', 'Subject:']
-                message_ok = True
-                if len(message.strip())==0:
-                    message_ok = False
-                elif not all(required in message for required in required_list):
-                    message_ok = False
-                elif not str(req.url_for("root")) in message and not "${url}" in message:
-                    message_ok = False
-                elif len(message) > 4096:
-                    message_ok = False
-
-                m = Parser(policy=default).parsestr(message)
-                
-                if "From" in m:
-                    if len(m['From'].addresses) > 1:
-                        message_ok = False
-                    elif len(m['From'].addresses) == 1 and (m['From'].addresses[0].username != "pseudo" or m['From'].addresses[0].domain != "infoaed.ee"):
-                        message_ok = False
-
-                if "Bcc" in m:
-                    message_ok = False
-                    
-                if not EMAIL_NOLIMIT and not message_ok:
-                    data = {'message': f'Deliver custom ballots with a script like https://github.com/infoaed/uduloor/', 'timestamp': datetime_representation()}
-                    yield data_state("error", data, initial_token)
-                    await asyncio.sleep(5)
-                    return                
-                
-            if not dry_run:
-                
-                t = time()
-                
-                try:
-                    if url not in LOCALHOSTS:
-                        if port != 587:
-                            server = aiosmtplib.SMTP(url, use_tls=True, port=port, tls_context=ssl.create_default_context()) # use_tls -> port: 465
-                            await server.connect()
-                        else:
-                            server = aiosmtplib.SMTP(url, use_tls=False, port=port) # port: 587
-                            await server.connect()
-                            await server.starttls()
-                        await server.login(username, password)
-                    else:
-                        server = aiosmtplib.SMTP(url, port=port)
-                        await server.connect()
-                        
-                    logging.info(f"SMTP connected in {time()-t} at {datetime_representation()}")
-
-                except Exception as e:
-                    data = {"message": str(e)}
-                    yield data_state("error", data, initial_token)
-                    await asyncio.sleep(5)
-                    return
-
-            bulletin_id, bulletin_token, vote_start, vote_finish, bulletin_name = await create_poll(
-                title = bulletin_title, token = initial_token, name = initial_name, start_time = start, end_time = end, choices = choices, voterhash_type = voterhash_type, reject_multi=reject_multi, personal_ballot=personal_ballot, limit_choices=limit_choices, reject_invalid=reject_invalid, reject_unlisted=reject_unlisted, mute_unlisted=mute_unlisted, block_unlisted=block_unlisted, limit_invalid=limit_invalid, limit_unlisted=limit_unlisted, limit_multi=limit_multi, encrypt_ballots=encrypt_ballots, voter_count = voter_count
-            )
-            
-            app.creators[bulletin_token] = vote_finish
-            
-            if bulletin_link == "token":
-                bulletin_url = str(req.url_for("root")) + bulletin_token
-            elif bulletin_link == "name" and bulletin_name is not None and len(bulletin_name) > 0:
-                bulletin_url = str(req.url_for("root")) + bulletin_name
-            
-            data = {"start": datetime_representation(vote_start), 'finish': datetime_representation(vote_finish), 'voter_count': voter_count, 'choices_count': choices_count, 'pseydonyms': wl, 'salted': salted, 'dry_run': dry_run, 'provide_voterlist': provide_voterlist if not provide_voterlist else voterhash_type, 'encrypt_voterlist': encrypt_voterlist if not encrypt_voterlist else pgp_id, 'bulletin_token': bulletin_token, 'timestamp': datetime_representation(), 'bulletin_url': bulletin_url}
-                
-            yield data_state("create", data, bulletin_token)
-            
-            # valib kasutamiseks nimekirjast seekordsed pseudonüümid
-            pseudo_list = get_pseudonym_list(voter_count, unique_words, cryptonyms = salted, salt_amount = salt_amount)
-
-            # segab hääletajate nimekirja
-            random.shuffle(voter_list)
-
-            data = {'voter_count': voter_count, 'timestamp': datetime_representation(), 'dry_run': dry_run}
-
-            # annab teada, et läheb pseudonüümide väljasaatmiseks
-            yield data_state("deliver", data, bulletin_token)
-            
-            # replace initial placeholders ($pseudonym and $voters to be replaced in next loop => no $pseudonym in headers) 
-            replace_initial = {'start': vote_start, 'finish': vote_finish, 'title': bulletin_title}
-            message = Template(message).safe_substitute(replace_initial)
-
-            # separate the message headers
-            content, headers, content_started = "", {}, False
-            for line in message.splitlines():
-                if content_started:
-                    content += line + '\r\n'
-                else:
-                    if ":" in line:
-                        splitted = line.split(":", 1)
-                        headers[splitted[0].strip().title()] = splitted[1].strip()
-                # headers block finishes with an empty line
-                if len(line.strip()) == 0:
-                    content_started = True
-
-            template = Template(content)
-
-            mailcount = 0
-
-            # saadab igale hääletajale segatud nimekirjas ühe pseudonüümi
-            for i in range(voter_count):
-                
-                if mailcount == EMAIL_CHUNK:
-                    
-                    t = time()
-                    
-                    # meiliserveritel on sageli smtp_accept_queue_per_connection limiit kuni 10
-                    try:
-                        mailcount = 0
-                        await server.quit()
-                        
-                        await asyncio.sleep(3)
-                        
-                        if url not in LOCALHOSTS:
-                            if port != 587:
-                                server = aiosmtplib.SMTP(url, use_tls=True, port=port, tls_context=ssl.create_default_context()) # use_tls -> port: 465
-                                await server.connect()
-                            else:
-                                server = aiosmtplib.SMTP(url, use_tls=False, port=port) # port: 587
-                                await server.connect()
-                                await server.starttls()
-                            await server.login(username, password)
-                        else:
-                            server = aiosmtplib.SMTP(url, port=port)
-                            await server.connect()
-                            
-                        logging.info(f"SMTP connected in {time()-t} at {datetime_representation()}")
-                            
-                    except Exception as e:
-                        data = {"message": str(e)}
-                        yield data_state("error", data, initial_token)
-                        await asyncio.sleep(5)
-                        return
-                
-                message = EmailMessage()
-                receiver_address = voter_list[i]
-                
-                if "From" not in headers:
-                    message.add_header("From", "Pseudovote <pseudo@infoaed.ee>")
-                for h in headers:
-                    if h != "To":
-                        message.add_header(h, headers[h])
-                
-                # the important part        
-                message.add_header("To", receiver_address)
-                
-                if "Subject" not in headers:
-                    message.add_header("Subject", bulletin_title)
-                
-                # choose salted/unsalted and if give personal voting address
-                pseudonym = pseudo_list[i].cryptonym if salted else pseudo_list[i].pseudonym
-                final_url = f"{bulletin_url}/{pseudonym}" if personal_ballot else bulletin_url
-                replace_final = {'pseudonym': pseudonym, 'url': final_url}
-              
-                # the most important part, replace pseudonyms into message body
-                content = template.substitute(replace_final)
-                message.set_content(content)
-                
-                if not dry_run:
-                    try:
-                        response = await server.send_message(message)
-                        
-                        mailcount += 1
-                    
-                    # annab saatmisvea korral teada ja katkestab
-                    except Exception as e:
-                        data = {"message": str(e)}
-                        yield data_state("error", data, bulletin_token)
-                        await asyncio.sleep(5)
-                        return
-                
-                # annab väljasaatmisest korraldajale teada
-                data = {'recipient': receiver_address, 'timestamp': datetime_representation()}
-                #data = {'pseudonym': pseudo_list[i].pseudonym} # soolatud pseudonüümide puhul on see ka mõeldav, aga mis selle mõte oleks?
-                yield data_state("deliver-pseudonym", data, bulletin_token)
-                
-                await asyncio.sleep(0.3)
-
-            # ajab seoste kaotamiseks pseudonüümide ja hääletajate nimekirjad uuesti sassi
-            random.shuffle(pseudo_list)
-            random.shuffle(voter_list)
-            
-            if not dry_run:
-                await server.quit()
-                    
-            if encrypt_voterlist or provide_voterlist:
-                
-                data = {'timestamp': datetime_representation()}
-            
-                if encrypt_voterlist:
-                    pgp_id = await encrypt_voterlist_under_embargo(pseudo_list, use_public_key = use_public_key, pubkey_id = pgp_id, bulletin_id = bulletin_id)
-                    
-                    if pgp_id:
-                        data["public_key"] = pgp_id
-                    voterlist_embargoed = True
-
-                if provide_voterlist:
-                    await provide_voterlist_to_bulletin(pseudo_list, voterhash_type, bulletin_id = bulletin_id)
-                    if voterhash_type:
-                        data["hash_type"] = voterhash_type
-                    
-                yield data_state("provide-voterlist", data, bulletin_token)
-
-        else:
-            
-            # no body => fallback get request for bulletin feed, catching up
-            # this does not create new bulletin and in some cases it is used
-            # to catch up to feed on network errors
-
-            bulletin_token = ""
-            if 'token' in req.path_params:
-                bulletin_token = req.path_params['token']
-            else:
-                data = {'message': 'No bulletin token provided', 'timestamp': datetime_representation()}
-                yield data_state("error", data, None)
-                await asyncio.sleep(5)
-                return
-                
-            pseudo_list = []
-            
-            try:
-                bulletin_token, bulletin_id, vote_start, vote_finish, created, choices, bulletin_name, bulletin_title, voterhash_type, ballot_type, voter_count, full_voterlist, pgp_id, decrypted_voterlist = await data_for_bulletin_feed(bulletin_token)
-                
-            except Exception as e:
-                data = {'message': f"No bulletin '{bulletin_token}' found", 'timestamp': datetime_representation()}
-                yield data_state("error", data, bulletin_token)
-                await asyncio.sleep(5)
-                return                
-
-            choices_list = []
-            if choices is not None and len(choices) > 0:
-                choices_list = json.loads(choices)
-            choices_count = len(choices_list)
-            
-            if bulletin_name:
-                bulletin_url = str(req.url_for("root")) + bulletin_name
-            else:
-                bulletin_url = str(req.url_for("root")) + bulletin_token
-            
-            data = {"start": datetime_representation(vote_start), 'finish': datetime_representation(vote_finish), 'created': datetime_representation(created), 'choices': choices, 'choices_count': choices_count, 'bulletin_name': bulletin_name, 'bulletin_title': bulletin_title, 'voter_count': voter_count, 'provide_voterlist': voterhash_type, 'encrypt_voterlist': pgp_id, 'bulletin_token': bulletin_token, 'timestamp': datetime_representation(), 'bulletin_url': bulletin_url}
-                
-            yield data_state("join-feed", data, bulletin_token)
-            
-        # both together
-
-        if not already_passed(vote_start):
-            data = {"start": datetime_representation(vote_start), "wait": (vote_start-datetime.now().astimezone()).total_seconds(), 'timestamp': datetime_representation()}
-            yield data_state("wait-start", data, bulletin_token)
-            await wait_until(vote_start)
-
-            data = {'timestamp': datetime_representation()}
-            yield data_state("open", data, bulletin_token)
-
-        if not already_passed(vote_finish):
-            data = {"finish": datetime_representation(vote_finish), "wait": (vote_finish-datetime.now().astimezone()).total_seconds(), 'timestamp': datetime_representation()}
-            yield data_state("wait-end", data, bulletin_token)
-            await wait_until(vote_finish)
-            
-            data = {'timestamp': datetime_representation()}
-            yield data_state("end", data, bulletin_token)
-        
-        data = {'timestamp': datetime_representation(), 'voter_count': voter_count, 'ballot_count': await get_ballot_count(bulletin_id)}
-        
-        if decrypted_voterlist:
-            data["encrypted_by"] = pgp_id
-            data["can_decrypt"] = (pgp_id == public_key_id)
-
-        yield data_state("audit", data, bulletin_token)
-        
-        # avaldab korraldajale kasutatud pseudonüümide nimekirja (ülal segati juba)
-        if len(pseudo_list) > 0:
-            for p in pseudo_list:
-                data = {'pseudonym': p.cryptonym} if salted else {'pseudonym': p.pseudonym}
-                yield data_state("audit-pseudonym", data, bulletin_token)
-        elif decrypted_voterlist:
-            for p in decrypted_voterlist.splitlines():
-                data = {'pseudonym': p}
-                yield data_state("audit-pseudonym", data, bulletin_token)
-        elif full_voterlist:
-            data['encrypted_voterlist'] = full_voterlist
-            data['encrypted_by'] = pgp_id
-            yield data_state("audit-encrypted", data, bulletin_token)
-
-        data = {'timestamp': datetime_representation()}
-        yield data_state("disconnect", data, bulletin_token)
-        
-        await asyncio.sleep(5)
-        
-    # client or server cancelled, backup election
-    
-    except asyncio.CancelledError as e:
-        
-        logging.info(f"Election feed '{bulletin_token}' cancelled.")
-        if bulletin_id and len(pseudo_list) > 0 and not voterlist_embargoed:
-            logging.info(f"Saving list of {len(pseudo_list)} voters encrypted with {pgp_id}.")
-            pgp_id = await asyncio.shield(encrypt_voterlist_under_embargo(pseudo_list, use_public_key = use_public_key, pubkey_id = pgp_id, bulletin_id = bulletin_id))
-            logging.info(f"Resulted {pgp_id}.")
-    
-    finally:
-        
-        if bulletin_token is not None and len(bulletin_token) > 0 and bulletin_token in app.creators:
-            del app.creators[bulletin_token]
-    
-    """
-    except Exception as e:
-
-        logging.info(f"Election feed '{bulletin_token}' disconnected.")
-        if bulletin_id and len(pseudo_list) > 0 and not voterlist_embargoed:
-            logging.info(f"Saving list of {len(pseudo_list)} voters encrypted with {public_key_id}.")
-            await encrypt_voterlist_under_embargo(pseudo_list, public_key, bulletin_id)
-    """
-
-async def create_poll(title = None, token = None, name = None, start_time = None, end_time = None, choices = None, voterhash_type = None, ballot_type = None, reject_multi = None, personal_ballot = None, limit_choices = None, reject_invalid = None, reject_unlisted = None, mute_unlisted = None, block_unlisted = None, limit_invalid = None, limit_unlisted = None, limit_multi = None, encrypt_ballots = None, voter_count = None):
-    """
-    Register a poll in database.
-    """
-    bulletin_id, bulletin_token, vote_start, vote_finish, bulletin_name = None, None, None, None, None
-    
-    if start_time is not None:
-        start_time = isoparse(start_time)
-    if end_time is not None:
-        end_time = isoparse(end_time)
-
-    if encrypt_ballots:
-        ballot_type = 'md5'
-
-    ins_dict = {"title": title, "name": name, "choices": choices, "voterhash_type": voterhash_type, "ballot_type": ballot_type, "voter_count": voter_count, "reject_multi": reject_multi, "personal_ballot": personal_ballot, "limit_choices": limit_choices, "reject_invalid": reject_invalid, "reject_unlisted": reject_unlisted, "mute_unlisted": mute_unlisted, "block_unlisted": block_unlisted, "limit_invalid": limit_invalid, "limit_unlisted": limit_unlisted, "limit_multi": limit_multi, "encrypt_ballots": encrypt_ballots}
-
-    async with app.state.pool.acquire() as con:
-        
-        if token is not None:
-            ins_dict["token"] = token
-        if start_time is not None and end_time is not None:
-            ins_dict["start"], ins_dict["finish"] = start_time, end_time
-        elif start_time is not None:
-            ins_dict["start"] = start_time
-        elif end_time is not None:
-            ins_dict["finish"] = end_time
-
-        keys = ", ".join(ins_dict.keys())
-        values = ins_dict.values()
-        nums = ", ".join(['${}'.format(i) for i in range(1, len(ins_dict)+1)])
-
-        res = await con.fetchrow("INSERT INTO pseudo.bulletin ({}) VALUES ({}) RETURNING id, token, start, finish, name".format(keys, nums), *values)
-
-        bulletin_id, bulletin_token, vote_start, vote_finish, bulletin_name = res['id'], res['token'], res['start'], res['finish'], res['name']
-                
-        logging.info(f"Created bulletin {'[' + title + '] ' if bulletin_name is not None else ''}with token '{bulletin_token}' ({bulletin_id}), scheduled from {vote_start} to {vote_finish}.")
-
-    return bulletin_id, bulletin_token, vote_start, vote_finish, bulletin_name
-    
 async def provide_voterlist_to_bulletin(pseudo_list, voterhash_type = None, bulletin_id = None):
     """
     Create voterlist for the poll in case `provide_voterlist` has been selected among bulletin board restrictions. Otherwise the voterlist will be not recorded to database, except for emergency fallback (see `encrypt_voterlist_under_embargo`).
@@ -1448,11 +901,6 @@ routes = [
     Route('/api/token', get_bulletin_token, methods=["POST"]),
     Route('/api/name', get_bulletin_name, methods=["POST"]),
     
-    Route('/api/create/{token}', start_voting, methods=["GET", "POST"]),
-    Route('/api/create', start_voting, methods=["POST"]),
-    
-    Route('/api/audit/{token}', start_voting, methods=["GET"]),
-    
     Route('/api/vote', process_vote, methods=["POST"]),
     Route('/api/bulletin/{token}', subscribe_bulletin, methods=["GET"]),
     
@@ -1481,12 +929,10 @@ routes_catchall = [
 routes.extend(routes_catchall)
 
 middleware = [
-
     Middleware(
         BabelMiddleware,
         locale_selector=select_locale_by_force
     ),
-    
 ]
 
 app = Starlette(on_startup=[startup], on_shutdown=[shutdown], routes=routes, middleware=middleware, debug=True)
