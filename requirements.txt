@@ -1,1 +1,12 @@
+aiosmtplib
+asgi-babel
+asyncpg
+jinja2
+pgpdump
+python-dateutil
+python-dotenv
+python-multipart
+regex
+sse-starlette
 starlette
+pytz

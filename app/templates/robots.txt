@@ -1,0 +1,5 @@
+Host: {{ url_for('root').__str__() }}
+Sitemap: {{ url_for('root').__str__() + "sitemap.xml" }}
+
+User-agent: *
+Disallow: 
