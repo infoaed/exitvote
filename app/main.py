@@ -34,7 +34,7 @@ from poll import poll_choices
 from exceptions import VoteRejectException
 from i18n import locale_names, available_locales, locale_in_path, select_locale_by_force
 
-pseudo_id = namedtuple('pseudo_id', ['pseudonym', 'code', 'cryptonym'])
+BULLETIN_TOKEN = 'uesooncsyyei'
 
 def announce_event(name, timestamp, channel, started = None):
     """
@@ -121,7 +121,8 @@ async def subscribe_bulletin(req):
     """
     Bulletin board of incoming votes is an essential feature and is displayed based on `token` of a poll. The feed is provided as EventSource feed in JSON and includes also poll status announcements.
     """
-    token = req.path_params['token']
+    # token = req.path_params['token']
+    token = BULLETIN_TOKEN
     
     async with app.state.pool.acquire() as con:
         res = await con.fetchrow("SELECT token, start, finish, encrypt_ballots FROM pseudo.bulletin WHERE id = pseudo.get_bulletin_id($1)", token)
@@ -220,7 +221,8 @@ async def collector(req):
     """
     Vote collector is a web page where votes are collected for single pre-defined election. Election status and bulletin board of incoming votes are displayed in real time to provide voter transparancy and hands on understanding of the process. Vote collector is the most critical part of the system from viewpoint of technical universality and has to be usable without Javascript or any other fancy web technology. Currently vote collector is somewhat tested against HTTPS capable versions of Lynx, Netscape Navigator and different versions Android/iPhone.
     """
-    token = req.path_params['token']
+    # token = req.path_params['token']
+    token = BULLETIN_TOKEN
 
     async with app.state.pool.acquire() as con:
         bulletin_id = await con.fetchval("SELECT pseudo.get_bulletin_id($1)", token)
@@ -427,9 +429,10 @@ async def process_vote(req):
     else:
         content = None
     
-    bulletin_token = None
-    if 'bulletin_token' in body:
-        bulletin_token = body['bulletin_token']
+    # bulletin_token = None
+    # if 'bulletin_token' in body:
+    #     bulletin_token = body['bulletin_token']
+    bulletin_token = BULLETIN_TOKEN
         
     if 'noscript_client' in body:
         noscript_client = bool(body['noscript_client'])
@@ -544,7 +547,8 @@ async def audit_bulletin(req):
     """
     Opens independent audit feed for an election where auditors will be provided data needed to audit the elections of tally the votes. The data displayed is the same displayed on the main election process dashboard except the e-mail sending process.
     """
-    token = req.path_params['token']
+    # token = req.path_params['token']
+    token = BULLETIN_TOKEN
     
     choices, title, start, end, created, in_voterlist, block_unlisted, encrypt_ballots, mute_unlisted, limit_choices = await data_for_bulletin(token)
     
@@ -661,7 +665,7 @@ templates.env.policies['json.dumps_kwargs'] = {'ensure_ascii': False}
 templates.env.globals.update(functions)
 
 routes = [
-    Route('/', distributor_home, name="root"),
+    Route('/', collector, name="root"),
 
     Route('/sitemap.xml', sitemap),
     Route('/robots.txt', robots),    
@@ -673,6 +677,7 @@ routes = [
     Route('/api/name', get_bulletin_name, methods=["POST"]),
     
     Route('/api/vote', process_vote, methods=["POST"]),
+    Route('/api/bulletin', subscribe_bulletin, methods=["GET"]),
     Route('/api/bulletin/{token}', subscribe_bulletin, methods=["GET"]),
     
     Route('/dynamic/{filename}', serve_i18n_javacript),
