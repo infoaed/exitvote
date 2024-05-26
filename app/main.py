@@ -13,7 +13,6 @@ from starlette.templating import Jinja2Templates
 from starlette.responses import  JSONResponse
 from sse_starlette.sse import EventSourceResponse
 
-from os import walk
 from os import getenv
 from babel import Locale
 from asgi_babel import BabelMiddleware, gettext, current_locale, select_locale_by_request
@@ -28,36 +27,15 @@ from pgpdump import AsciiData
 from datetime import datetime
 from collections import namedtuple
 
-from dateutil.parser import isoparse, parse
+from dateutil.parser import isoparse
 
+from meta import get_json_metadata
 from poll import poll_choices
 from exceptions import VoteRejectException
+from i18n import locale_names, available_locales, locale_in_path, select_locale_by_force
 
 pseudo_id = namedtuple('pseudo_id', ['pseudonym', 'code', 'cryptonym'])
 
-def get_pseudonym_list(voter_count, word_list, cryptonyms = False, salt_amount = None):
-    """
-    Creating the randomized list of pseudonyms was initially the main feature of initial Uduloor version of pseudonymous voting routine, but it is currently provided here mostly for convenience. Ideally you should select the pseudonyms far away from the bulletin board service in order to avoid any manipulation of the votes. Selection process currently enables of selection pseudonyms and "salting" them with a number to create memorizable pairs of text and numbers following the pattern of `user123`. In a real polling situation you should provide pseudonyms separately and then maybe include hashed list of pseudonyms as gatekeeper for vote collecting mechanism to make sure it is not manipulated by spamming or similar.
-    """
-    random_words = random.sample(word_list, voter_count)
-    
-    if cryptonyms:
-        if salt_amount is None:
-            salt_amount = 3
-
-        random_keys = [random.choice(range(10**salt_amount//10, 10**salt_amount)) for x in range(voter_count)]
-    
-    pseudo_list = []
-    
-    for i in range(voter_count):
-        
-        if not cryptonyms:
-            pseudo_list.append(pseudo_id(random_words[i], None, None))
-        else:
-            pseudo_list.append(pseudo_id(random_words[i], str(random_keys[i]), random_words[i] + str(random_keys[i])))
-        
-    return pseudo_list
-        
 def announce_event(name, timestamp, channel, started = None):
     """
     Announce events to every client in channel.
@@ -238,37 +216,6 @@ async def provide_voterlist_to_bulletin(pseudo_list, voterhash_type = None, bull
 
     return
     
-async def encrypt_voterlist_under_embargo(pseudo_list, use_public_key, pubkey_id, bulletin_id):
-    """
-    Encrypting voterlist is done on demand with pgp public key provided at `use_public_key` in bulletin board access restrictions dialog or as a fallback when system breaks down for some reason. If voterlist is encrypted as a fallback, public key of the bulletin board system itself is used in order to decrypt the voterlist with private key after embargo, that is, when the election is over. Currently encrypting the voterlist is not proper feature of exemplified voting scheme, because encryping voterlist makes sense if it is done as completely separate process and maybe providing voterlist to bulletin board in already encrypted form (hashed pseydonyms and/or full encrypted voterlist to be decrypted after election is over).
-    """
-    if len(pseudo_list) == 0:
-        return None
-    
-    pgp_id = None
-    
-    async with app.state.pool.acquire() as con:
-        
-        if pseudo_list[0].cryptonym:
-            full_voterlist = "\n".join(list(x.cryptonym for x in pseudo_list))
-        else:
-            full_voterlist = "\n".join(list(x.pseudonym for x in pseudo_list))
-
-        pgp_id = await con.fetchval("UPDATE pseudo.bulletin SET full_voterlist = pseudo.armor(pseudo.pgp_pub_encrypt($1, pseudo.dearmor($2))), pubkey_id = $3 WHERE id = $4 RETURNING pubkey_id", full_voterlist, use_public_key, pubkey_id, bulletin_id)
-    
-    return pgp_id
-
-async def get_ballot_count(bulletin_id):
-    """
-    Report ballot count for a poll/election.
-    """
-    ballot_count = None
-    async with app.state.pool.acquire() as con:
-
-        ballot_count = await con.fetchval("SELECT COUNT(id) FROM pseudo.vote WHERE bulletin_id = $1", bulletin_id)
-    
-    return ballot_count
-
 async def collector(req):
     """
     Vote collector is a web page where votes are collected for single pre-defined election. Election status and bulletin board of incoming votes are displayed in real time to provide voter transparancy and hands on understanding of the process. Vote collector is the most critical part of the system from viewpoint of technical universality and has to be usable without Javascript or any other fancy web technology. Currently vote collector is somewhat tested against HTTPS capable versions of Lynx, Netscape Navigator and different versions Android/iPhone.
@@ -617,156 +564,7 @@ async def robots(req):
     Dynamically generated robots.txt.
     """
     return templates.TemplateResponse('robots.txt', {'request': req}, headers={'Content-Type': 'text/plain'})
-
-person_responsible = {
-    "@type": "Person",
-    "name": "Märt Põder",
-    "sameAs": "https://www.wikidata.org/wiki/Q16404899"
-    }
-
-organizer = {
-    "@type": "Organization",
-    "name": "Infoaed OÜ",
-    "url": "https://infoaed.ee/"
-    }
-        
-def get_json_metadata(req, name, alt_name, title, description, params = {}, page = "home"):
-    """
-    Provide schema.org style JSON-LD metadata.
-    """
-    if page == "home":
-        return metadata_for_home(req, name, alt_name, title, description)
-    if page == "bulletin":
-        return metadata_for_bulletin(req, name, alt_name, title, description, params)
-    if page == "audit":
-        return metadata_for_audit(req, name, alt_name, title, description, params)
-        
-    return None
-
-def metadata_for_home(req, name, alt_name, title, description):
-    """
-    JSON-LD metadata for home.
-    """
-    metadata = {
-        "@context" : "http://schema.org",
-        "@type" : "WebPage",
-        "mainEntityOfPage": {
-            "@type": "WebSite",
-            "isAccessibleForFree": True,
-            "name": name,
-            "alternateName": alt_name,
-            "description": description,
-            "url": str(req.url_for("root")),
-            "author" : person_responsible,
-            "datePublished": parse("Wed, 5 Jan 2022 16:27:35 +0200").isoformat()
-        },
-        "name": name + ": " + title,
-        "description": description,
-        "inLanguage" : {"@type" : "Language", 'name': locale_names[current_locale.get().language]["en"],
-            "alternateName": current_locale.get().language},
-        "dateModified" : LASTMODIFIED.isoformat(),
-        "url" : str(req.url)
-    }
-
-    return metadata
-
-def metadata_for_bulletin(req, name, alt_name, title, description, params):
-    """
-    JSON-LD metadata for bulletin boards.
-    """
-    now = datetime.now().astimezone()
-
-    metadata = {
-        "@context" : "http://schema.org",
-        "@type" : "Event",
-        "@id": str(req.url),
-        "name": title,
-        "alternateName": alt_name,
-        "description": description,
-        "mainEntityOfPage": {
-            "@type": "WebPage",
-            "name": name + ": " + title,
-            "alternateName": alt_name,
-            "description": description,
-            "url": str(req.url),
-            "datePublished": params['created'].isoformat()
-        },
-        "inLanguage" : {"@type" : "Language",
-            'name': locale_names[current_locale.get().language]["en"],
-            "alternateName": current_locale.get().language},
-        "doorTime": params['created'].isoformat(),
-        "startDate": params['start'].isoformat(),
-        "endDate": params['end'].isoformat(),
-        "eventStatus": "EventScheduled",
-        "eventAttendanceMode": "OnlineEventAttendanceMode",
-        "isAccessibleForFree": True,
-        "location": {
-            "@type": "VirtualLocation",
-            "name": name,
-            "url": str(req.url)
-        },
-        "image": str(req.url_for("root")) + "static/logo.jpg",
-        "url" : str(req.url),
-        "organizer": organizer
-    }
-    
-    return metadata
-
-def metadata_for_audit(req, name, alt_name, title, description, params):
-    """
-    JSON-LD metadata for audit dashboards.
-    """
-    metadata = {
-        "@context" : "http://schema.org",
-        "@type" : "DataFeed",
-        "@id": str(req.url),
-        "name": title,
-        "alternateName": alt_name,
-        "description": description,
-        "isPartOf": {
-            "@type": "WebPage",
-            "url": str(req.url_for("root")) + locale_in_path(req) + "/" + params['token'],
-            "datePublished": params['created'].isoformat()
-        },
-        "inLanguage" : {"@type" : "Language",
-            'name': locale_names[current_locale.get().language]["en"],
-            "alternateName": current_locale.get().language},
-        "dateCreated": params['created'].isoformat(),
-        "image": str(req.url_for("root")) + "static/logo.jpg",
-        "url" : str(req.url)
-    }
-    
-    return metadata
-
-async def select_locale_by_force(req):
-    """
-    Override negotiated locale with the one in URL.
-    """
-    locale_str = locale_in_path(req)
-    if locale_str != "":
-        if locale_str in available_locales:
-            locale = Locale.parse(locale_str, sep="-")
-            token = current_locale.set(locale)
-            return locale
-
-    locale = await select_locale_by_request(req)
-    if locale in available_locales:
-        return locale
-    
-    return None
-
-def locale_in_path(req):
-    """
-    Detect locale specifiec in URL.
-    """
-    path_len = len(req.url.path)
-    if path_len == 3 or path_len > 3 and req.url.path[3] == '/':
-        locale_str = req.url.path[1:3]
-        if locale_str in available_locales:
-            return locale_str
-            
-    return ""
-
+ 
 async def serve_i18n_javacript(req):
     """
     Since Javascript i18n is always painful, just cut the Gordian knot with serving scripts as translatable templates.
@@ -811,7 +609,6 @@ async def startup():
     app.state.notify_connection = await app.state.pool.acquire()
     await app.state.notify_connection.add_listener(notify_channel, database_listener) # maybe add_termination_listener
     logging.info(f"Connected to notify channel \"{notify_channel}\".")
-    logging.info(f"Expecting SMTP server at \"{EMAIL_HOST}:{EMAIL_PORT}\".")
     
 async def shutdown():
     """
@@ -837,22 +634,6 @@ random = SystemRandom()
 load_dotenv()
 
 DB_HOST = getenv("DB_HOST", "localhost")
-LOCALHOSTS = ["mail", "localhost", "127.0.0.1", "0.0.0.0"]
-
-EMAIL_PORT = int(getenv("EMAIL_PORT", "25"))
-EMAIL_HOST = getenv("EMAIL_HOST", "localhost")
-EMAIL_USERNAME = getenv("EMAIL_USERNAME", "pseudo")
-EMAIL_PASSWORD = getenv("EMAIL_PASSWORD", "default")
-
-EMAIL_NOLIMIT = bool(getenv("EMAIL_NOLIMIT", "false").lower()[0] not in ("f", "0"))
-EMAIL_LIMIT = int(getenv("EMAIL_LIMIT", "101"))
-EMAIL_CHUNK = int(getenv("EMAIL_CHUNK", "10"))
-
-flowers = read_lines("wordlists/flowers.txt")
-islands = read_lines("wordlists/islands.txt")
-emojis = read_lines("wordlists/emoji-animals.txt")
-starwars = read_lines("wordlists/starwars.txt")
-candidates = read_lines("wordlists/bands_named_after_persons.txt")
 
 public_key = read_lines("keys/gpg-public.txt")
 private_key = read_lines("keys/gpg-private.txt")
@@ -862,16 +643,6 @@ packets = list(AsciiData('\n'.join(private_key).encode('ascii')).packets())
 private_key_id = packets[0].key_id.decode()
 
 notify_channel = 'votes_and_bulletins'
-
-available_locales = [l for l in next(walk("locales"), ([],[],[]))[1] if not l.startswith("__") and not l.endswith("__")]
-
-locale_names = {}
-
-for l in available_locales:
-    c = locale_names[l] = {}
-    p = Locale.parse(l)
-    for n in available_locales:
-        c[n] = p.get_language_name(n)
 
 functions = {
     "_": gettext,
