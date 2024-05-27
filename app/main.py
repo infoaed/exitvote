@@ -224,11 +224,6 @@ async def collector(req):
     pseudonym = ""    
     if 'pseudonym' in req.path_params:
         pseudonym = req.path_params['pseudonym']
-    """elif len(req.query_params.keys()) > 0:
-        p = next(iter(req.query_params.keys()))
-        if len(p) > 0:
-            pseudonym = p
-    """
     
     choices, title, start, end, created, in_voterlist, block_unlisted, encrypt_ballots, mute_unlisted, limit_choices = await data_for_bulletin(token, bulletin_id, pseudonym)
        
@@ -650,8 +645,7 @@ locale_sub_routes = [
     Route('/dynamic/{filename}', serve_i18n_javacript),
     Route('/audit/{token}', audit_bulletin),
     
-    Route('/{token}/{pseudonym}', collector),
-    Route('/{token}', collector),
+    Route('/{pseudonym}', collector),
 ]
 
 for locale in available_locales:
@@ -659,8 +653,7 @@ for locale in available_locales:
     routes.append(Mount('/'+locale, routes=locale_sub_routes, name=locale))
 
 routes_catchall = [
-    Route('/{token}/{pseudonym}', collector),
-    Route('/{token}', collector),
+    Route('/{pseudonym}', collector),
 ]
 
 routes.extend(routes_catchall)
