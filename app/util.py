@@ -1,4 +1,5 @@
 import asyncio
+import json
 
 from datetime import datetime, timedelta
 from pathlib import Path
@@ -74,16 +75,38 @@ def create_choice_html(r, index, classname, typename, ordered = False):
     fs_name = f"fs_{index}"
     
     html += f'<p><fieldset itemscope itemtype="https://schema.org/VoteAction" id="{fs_name}" name="{fs_name}" class="choice" data-min="{r["min"]}" data-max="{r["max"]}" data-ordered={str(r["ordered"]).lower()} data-section="{index}"><legend>{index}. {r["title"]}</legend>'
-    if ordered:
-        html += f'<ol name="list_{index}" id="list_{index}">'
-    for x in r['choices']:
-        if not ordered:
-            html += f'<input itemprop="actionOption" class="{classname}" type="{typename}" name="{r_name}" value="{x}" disabled> <label itemprop="name" for="{x}">{x}</label><br>'
-        else:
-            html += f'<li itemprop="name"><input itemprop="actionOption" class="{classname}" type="{typename}" name="{r_name}" value="{x}" disabled> {x}</li>'            
-    if ordered:
-        html += '</ol>'       
+    with open("ep24-candidates/converted-candidates.json", "r") as file:
+        choices = json.load(file)
+
+    # Generate HTML structure for each association
+    for association in choices:
+        html += f'  <div class="accordion">{association["politicalAssociationName"]}</div>'
+        html += f'<div class="panel">'
+        for candidate in association["candidates"]:
+            html += '  <div class="candidate">'
+            html += f'<input itemprop="actionOption" class="{classname}" type="{typename}" name="{r_name}" value="{candidate}" disabled> <label itemprop="name" for="{candidate}">{candidate}</label><br>'
+            html += '  </div>'
+        html += '</div>'
     html += '</fieldset></p>'
+
+    html += '''
+    <script>
+        var acc = document.getElementsByClassName("accordion");
+        var i;
+
+        for (i = 0; i < acc.length; i++) {
+        acc[i].addEventListener("click", function() {
+            this.classList.toggle("active");
+            var panel = this.nextElementSibling;
+            if (panel.style.maxHeight) {
+            panel.style.maxHeight = null;
+            } else {
+            panel.style.maxHeight = panel.scrollHeight + "px";
+            } 
+        });
+        }
+    </script>
+    '''
 
     if not ordered:
         html += '''

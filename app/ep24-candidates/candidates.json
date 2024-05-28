@@ -1,0 +1,1365 @@
+[
+  {
+      "nr": 169,
+      "firstName": "VSEVOLOD",
+      "lastName": "JÜRGENSON",
+      "ehak": "0000",
+      "electoralDistrictNr": 1,
+      "applicationId": 11170,
+      "politicalAffiliationName": "-",
+      "politicalAssociationName": "Üksikkandidaadid",
+      "dateOfBirth": "06.10.1979",
+      "contacts": {
+          "PHONE": "+372-56847782",
+          "EMAIL": "vsevolodjurgenson@gmail.com",
+          "ADDRESS": "J. Sütiste tee 22-2, Tallinn",
+          "FACEBOOK": "https://www.facebook.com/vsevolodjurgenson/",
+          "TWITTER": "https://twitter.com/vjurgenson71395"
+      },
+      "education": "SECONDARY_EDUCATION",
+      "employment": "OÜ VSEVOLOD JÜRGENSON juhatuse liige"
+  },
+  {
+      "nr": 140,
+      "firstName": "URMAS",
+      "lastName": "PAET",
+      "ehak": "0000",
+      "electoralDistrictNr": 1,
+      "applicationId": 11171,
+      "politicalAffiliationName": "Eesti Reformierakond",
+      "politicalAssociationName": "Eesti Reformierakond",
+      "dateOfBirth": "20.04.1974",
+      "contacts": {
+          "EMAIL": "urmas.paet@ep.europa.eu",
+          "FACEBOOK": "https://www.facebook.com/urmas.paet"
+      },
+      "education": "HIGHER_EDUCATION",
+      "employment": "Euroopa Parlamendi liige"
+  },
+  {
+      "nr": 141,
+      "firstName": "YOKO",
+      "lastName": "ALENDER",
+      "ehak": "0000",
+      "electoralDistrictNr": 1,
+      "applicationId": 11172,
+      "politicalAffiliationName": "Eesti Reformierakond",
+      "politicalAssociationName": "Eesti Reformierakond",
+      "dateOfBirth": "13.06.1979",
+      "contacts": {
+          "EMAIL": "yoko.alender@riigikogu.ee",
+          "FACEBOOK": "https://www.facebook.com/yoko.alender"
+      },
+      "education": "HIGHER_EDUCATION",
+      "employment": "Riigikogu liige"
+  },
+  {
+      "nr": 142,
+      "firstName": "LUUKAS KRISTJAN",
+      "lastName": "ILVES",
+      "ehak": "0000",
+      "electoralDistrictNr": 1,
+      "applicationId": 11173,
+      "politicalAffiliationName": "Eesti Reformierakond",
+      "politicalAssociationName": "Eesti Reformierakond",
+      "dateOfBirth": "15.10.1987",
+      "contacts": {
+          "PHONE": "+372-5019897",
+          "EMAIL": "luukas.ilves@gmail.com",
+          "ADDRESS": "",
+          "FACEBOOK": "https://www.facebook.com/luukas.ilves",
+          "TWITTER": "https://twitter.com/luukasilves"
+      },
+      "education": "HIGHER_EDUCATION",
+      "employment": "kantsleri nõunik, Majandus- ja Kommunikatsiooniministeerium"
+  },
+  {
+      "nr": 143,
+      "firstName": "MARIA",
+      "lastName": "JUFEREVA-SKURATOVSKI",
+      "ehak": "0000",
+      "electoralDistrictNr": 1,
+      "applicationId": 11174,
+      "politicalAffiliationName": "Eesti Reformierakond",
+      "politicalAssociationName": "Eesti Reformierakond",
+      "dateOfBirth": "11.10.1979",
+      "contacts": {
+          "EMAIL": "mariajuf@gmail.com",
+          "FACEBOOK": "https://www.facebook.com/maria.jufereva"
+      },
+      "education": "HIGHER_EDUCATION",
+      "employment": "Riigikogu, Riigikogu liige"
+  },
+  {
+      "nr": 144,
+      "firstName": "MARKO",
+      "lastName": "MIHKELSON",
+      "ehak": "0000",
+      "electoralDistrictNr": 1,
+      "applicationId": 11175,
+      "politicalAffiliationName": "Eesti Reformierakond",
+      "politicalAssociationName": "Eesti Reformierakond",
+      "dateOfBirth": "30.11.1969",
+      "contacts": {
+          "EMAIL": "marko.mihkelson@gmail.com",
+          "FACEBOOK": "https://www.facebook.com/mihkelson"
+      },
+      "education": "HIGHER_EDUCATION",
+      "employment": "Riigikogu, Riigikogu liige"
+  },
+  {
+      "nr": 145,
+      "firstName": "HANAH",
+      "lastName": "LAHE",
+      "ehak": "0000",
+      "electoralDistrictNr": 1,
+      "applicationId": 11176,
+      "politicalAffiliationName": "Eesti Reformierakond",
+      "politicalAssociationName": "Eesti Reformierakond",
+      "dateOfBirth": "08.07.1999",
+      "contacts": {
+          "EMAIL": "hanah.lahe@riigikogu.ee"
+      },
+      "education": "HIGHER_EDUCATION",
+      "employment": "Riigikogu, Riigikogu liige"
+  },
+  {
+      "nr": 146,
+      "firstName": "KARMEN",
+      "lastName": "JOLLER",
+      "ehak": "0000",
+      "electoralDistrictNr": 1,
+      "applicationId": 11177,
+      "politicalAffiliationName": "Eesti Reformierakond",
+      "politicalAssociationName": "Eesti Reformierakond",
+      "dateOfBirth": "03.01.1976",
+      "contacts": {
+          "PHONE": "+372-5061569",
+          "EMAIL": "karmen.joller@riigikogu.ee",
+          "FACEBOOK": "https://www.facebook.com/karmen.joller"
+      },
+      "education": "HIGHER_EDUCATION",
+      "employment": "Riigikogu, Riigikogu liige"
+  },
+  {
+      "nr": 147,
+      "firstName": "MAARJA",
+      "lastName": "METSTAK",
+      "ehak": "0000",
+      "electoralDistrictNr": 1,
+      "applicationId": 11178,
+      "politicalAffiliationName": "Eesti Reformierakond",
+      "politicalAssociationName": "Eesti Reformierakond",
+      "dateOfBirth": "26.03.1989",
+      "contacts": {
+          "EMAIL": "maarja.metstak@gmail.com",
+          "FACEBOOK": "https://www.facebook.com/maarja.metstak"
+      },
+      "education": "HIGHER_EDUCATION",
+      "employment": "Energex Energy Experts OÜ Finantsjuht"
+  },
+  {
+      "nr": 148,
+      "firstName": "HANNO",
+      "lastName": "PEVKUR",
+      "ehak": "0000",
+      "electoralDistrictNr": 1,
+      "applicationId": 11179,
+      "politicalAffiliationName": "Eesti Reformierakond",
+      "politicalAssociationName": "Eesti Reformierakond",
+      "dateOfBirth": "02.04.1977",
+      "contacts": {
+          "EMAIL": "hanno@pevkur.ee",
+          "FACEBOOK": "https://www.facebook.com/HPevkur"
+      },
+      "education": "HIGHER_EDUCATION",
+      "employment": "Vabariigi Valitsus, Kaitseminister"
+  },
+  {
+      "nr": 170,
+      "firstName": "ANDRES",
+      "lastName": "INN",
+      "ehak": "0000",
+      "electoralDistrictNr": 1,
+      "applicationId": 11181,
+      "politicalAffiliationName": "Eesti Vabaduspartei - Põllumeeste Kogu",
+      "politicalAssociationName": "Üksikkandidaadid",
+      "dateOfBirth": "29.11.1946",
+      "contacts": {
+          "PHONE": "+372-53923761",
+          "EMAIL": "info@andresinn.ee",
+          "ADDRESS": "71501 Suure-Jaani",
+          "FACEBOOK": "https://www.facebook.com/andres.inn.50"
+      },
+      "education": "HIGHER_EDUCATION",
+      "employment": "Pensionär"
+  },
+  {
+      "nr": 168,
+      "firstName": "MIKE",
+      "lastName": "CALAMUS",
+      "ehak": "0000",
+      "electoralDistrictNr": 1,
+      "applicationId": 11182,
+      "politicalAffiliationName": "-",
+      "politicalAssociationName": "Üksikkandidaadid",
+      "dateOfBirth": "06.12.1974",
+      "contacts": {
+          "PHONE": "+1-3012755640",
+          "EMAIL": "mike.calamus@gmail.com",
+          "ADDRESS": "Roosi 33 -3 Tartu linn",
+          "FACEBOOK": "https://www.facebook.com/mike.calamus.5",
+          "TWITTER": "https://twitter.com/MikeCalamus"
+      },
+      "education": "HIGHER_EDUCATION",
+      "employment": "MTÜ Konservatiivne Eesti , juhatuse liige"
+  },
+  {
+      "nr": 102,
+      "firstName": "MARTIN",
+      "lastName": "HELME",
+      "ehak": "0000",
+      "electoralDistrictNr": 1,
+      "applicationId": 11183,
+      "politicalAffiliationName": "Eesti Konservatiivne Rahvaerakond",
+      "politicalAssociationName": "Eesti Konservatiivne Rahvaerakond",
+      "dateOfBirth": "24.04.1976",
+      "contacts": {
+          "PHONE": "+372-53300002",
+          "EMAIL": "martin.helme@riigikogu.ee",
+          "FACEBOOK": "https://www.facebook.com/eestiesikonservatiiv",
+          "TWITTER": "https://twitter.com/MartinHelme"
+      },
+      "education": "HIGHER_EDUCATION",
+      "employment": "Riigikogu, Riigikogu liige"
+  },
+  {
+      "nr": 103,
+      "firstName": "ANTI",
+      "lastName": "POOLAMETS",
+      "ehak": "0000",
+      "electoralDistrictNr": 1,
+      "applicationId": 11184,
+      "politicalAffiliationName": "Eesti Konservatiivne Rahvaerakond",
+      "politicalAssociationName": "Eesti Konservatiivne Rahvaerakond",
+      "dateOfBirth": "22.02.1971",
+      "contacts": {
+          "EMAIL": "anti.poolamets@riigikogu.ee",
+          "FACEBOOK": "https://www.facebook.com/poolamets/"
+      },
+      "education": "HIGHER_EDUCATION",
+      "employment": "Riigikogu, Riigikogu liige"
+  },
+  {
+      "nr": 104,
+      "firstName": "HELLE-MOONIKA",
+      "lastName": "HELME",
+      "ehak": "0000",
+      "electoralDistrictNr": 1,
+      "applicationId": 11185,
+      "politicalAffiliationName": "Eesti Konservatiivne Rahvaerakond",
+      "politicalAssociationName": "Eesti Konservatiivne Rahvaerakond",
+      "dateOfBirth": "08.07.1966",
+      "contacts": {
+          "PHONE": "+372-5297505",
+          "EMAIL": "moonikahelme@gmail.com",
+          "ADDRESS": "Tanuma 15, Tallinn"
+      },
+      "education": "HIGHER_EDUCATION",
+      "employment": "Riigikogu, Riigikogu liige"
+  },
+  {
+      "nr": 105,
+      "firstName": "HENN",
+      "lastName": "PÕLLUAAS",
+      "ehak": "0000",
+      "electoralDistrictNr": 1,
+      "applicationId": 11186,
+      "politicalAffiliationName": "Eesti Konservatiivne Rahvaerakond",
+      "politicalAssociationName": "Eesti Konservatiivne Rahvaerakond",
+      "dateOfBirth": "16.02.1960",
+      "contacts": {
+          "PHONE": "+372-58541447",
+          "EMAIL": "hennpolluaas@gmail.com"
+      },
+      "education": "HIGHER_EDUCATION",
+      "employment": "Riigikogu, Riigikogu liige"
+  },
+  {
+      "nr": 106,
+      "firstName": "SIIM",
+      "lastName": "POHLAK",
+      "ehak": "0000",
+      "electoralDistrictNr": 1,
+      "applicationId": 11187,
+      "politicalAffiliationName": "Eesti Konservatiivne Rahvaerakond",
+      "politicalAssociationName": "Eesti Konservatiivne Rahvaerakond",
+      "dateOfBirth": "14.05.1985",
+      "contacts": {
+          "EMAIL": "siim.pohlak@ekre.ee",
+          "FACEBOOK": "https://www.facebook.com/siimpohlak"
+      },
+      "education": "SECONDARY_EDUCATION",
+      "employment": "Riigikogu, Riigikogu liige"
+  },
+  {
+      "nr": 108,
+      "firstName": "RAIN",
+      "lastName": "EPLER",
+      "ehak": "0000",
+      "electoralDistrictNr": 1,
+      "applicationId": 11188,
+      "politicalAffiliationName": "Eesti Konservatiivne Rahvaerakond",
+      "politicalAssociationName": "Eesti Konservatiivne Rahvaerakond",
+      "dateOfBirth": "06.06.1977",
+      "contacts": {
+          "PHONE": "+372-5056971",
+          "EMAIL": "rainepler@gmail.com",
+          "FACEBOOK": "https://www.facebook.com/eplerrain"
+      },
+      "education": "SECONDARY_EDUCATION",
+      "employment": "Riigikogu, Riigikogu liige"
+  },
+  {
+      "nr": 109,
+      "firstName": "ARVO",
+      "lastName": "ALLER",
+      "ehak": "0000",
+      "electoralDistrictNr": 1,
+      "applicationId": 11189,
+      "politicalAffiliationName": "Eesti Konservatiivne Rahvaerakond",
+      "politicalAssociationName": "Eesti Konservatiivne Rahvaerakond",
+      "dateOfBirth": "28.07.1973",
+      "contacts": {
+          "PHONE": "+372-56624644",
+          "EMAIL": "arvo@ivtl.ee"
+      },
+      "education": "HIGHER_EDUCATION",
+      "employment": "Riigikogu, Riigikogu liige"
+  },
+  {
+      "nr": 110,
+      "firstName": "JAAK",
+      "lastName": "MADISON",
+      "ehak": "0000",
+      "electoralDistrictNr": 1,
+      "applicationId": 11190,
+      "politicalAffiliationName": "Eesti Konservatiivne Rahvaerakond",
+      "politicalAssociationName": "Eesti Konservatiivne Rahvaerakond",
+      "dateOfBirth": "22.04.1991",
+      "contacts": {
+          "EMAIL": "jaak.madison@gmail.com",
+          "FACEBOOK": "https://www.facebook.com/madisonjaak/",
+          "TWITTER": "https://twitter.com/JaakMadison"
+      },
+      "education": "HIGHER_EDUCATION",
+      "employment": "Euroopa Parlament, Euroopa Parlamendi liige"
+  },
+  {
+      "nr": 126,
+      "firstName": "RIINA",
+      "lastName": "SIKKUT",
+      "ehak": "0000",
+      "electoralDistrictNr": 1,
+      "applicationId": 11191,
+      "politicalAffiliationName": "Sotsiaaldemokraatlik Erakond",
+      "politicalAssociationName": "Sotsiaaldemokraatlik Erakond",
+      "dateOfBirth": "12.01.1983",
+      "contacts": {
+          "EMAIL": "riina.sikkut@sotsid.ee",
+          "FACEBOOK": "https://www.facebook.com/riinasikkut.ee"
+      },
+      "education": "HIGHER_EDUCATION",
+      "employment": "Sotsiaalministeerium, terviseminister"
+  },
+  {
+      "nr": 129,
+      "firstName": "VOOTELE",
+      "lastName": "PÄI",
+      "ehak": "0000",
+      "electoralDistrictNr": 1,
+      "applicationId": 11192,
+      "politicalAffiliationName": "Sotsiaaldemokraatlik Erakond",
+      "politicalAssociationName": "Sotsiaaldemokraatlik Erakond",
+      "dateOfBirth": "12.10.1988",
+      "contacts": {
+          "PHONE": "+372-56507730",
+          "EMAIL": "vootele.pai@gmail.com",
+          "FACEBOOK": "https://www.facebook.com/vootele.pai",
+          "TWITTER": "https://twitter.com/paivootele"
+      },
+      "education": "HIGHER_EDUCATION",
+      "employment": "Siseministeerium, siseministri nõunik"
+  },
+  {
+      "nr": 128,
+      "firstName": "NATALIE",
+      "lastName": "METS",
+      "ehak": "0000",
+      "electoralDistrictNr": 1,
+      "applicationId": 11193,
+      "politicalAffiliationName": "Sotsiaaldemokraatlik Erakond",
+      "politicalAssociationName": "Sotsiaaldemokraatlik Erakond",
+      "dateOfBirth": "18.04.1991",
+      "contacts": {
+          "PHONE": "+372-53457360",
+          "EMAIL": "metsnatalie@gmail.com",
+          "ADDRESS": "Sõle 68-6",
+          "FACEBOOK": "https://m.facebook.com/sotsnataliemets",
+          "TWITTER": "https://twitter.com/sotsnataliemets"
+      },
+      "education": "HIGHER_EDUCATION",
+      "employment": "Tallinna Linnakantselei, ööelu nõunik"
+  },
+  {
+      "nr": 107,
+      "firstName": "MERLE",
+      "lastName": "KIVEST",
+      "ehak": "0000",
+      "electoralDistrictNr": 1,
+      "applicationId": 11194,
+      "politicalAffiliationName": "Eesti Konservatiivne Rahvaerakond",
+      "politicalAssociationName": "Eesti Konservatiivne Rahvaerakond",
+      "dateOfBirth": "22.01.1974",
+      "contacts": {
+          "PHONE": "+372-56643550",
+          "EMAIL": "merlekivest@hotmail.com"
+      },
+      "education": "HIGHER_EDUCATION",
+      "employment": "Tartu linnavolikogu, volikogu liige"
+  },
+  {
+      "nr": 149,
+      "firstName": "MIHHAIL",
+      "lastName": "KÕLVART",
+      "ehak": "0000",
+      "electoralDistrictNr": 1,
+      "applicationId": 11195,
+      "politicalAffiliationName": "Eesti Keskerakond",
+      "politicalAssociationName": "Eesti Keskerakond",
+      "dateOfBirth": "24.11.1977",
+      "contacts": {
+          "EMAIL": "mihhail.kolvart@tallinn.ee",
+          "FACEBOOK": "https://www.facebook.com/MihhailKolvart/"
+      },
+      "education": "HIGHER_EDUCATION",
+      "employment": "Tallinna Linnavolikogu, liige"
+  },
+  {
+      "nr": 158,
+      "firstName": "LAVLY",
+      "lastName": "PERLING",
+      "ehak": "0000",
+      "electoralDistrictNr": 1,
+      "applicationId": 11196,
+      "politicalAffiliationName": "Erakond Parempoolsed",
+      "politicalAssociationName": "Erakond Parempoolsed",
+      "dateOfBirth": "26.09.1975",
+      "contacts": {
+          "PHONE": "+372-5106116",
+          "EMAIL": "Lavly.perling@parempoolsed.ee",
+          "FACEBOOK": "https://www.facebook.com/poliitikLavlyPerling",
+          "TWITTER": "https://twitter.com/LavlyPerling"
+      },
+      "education": "HIGHER_EDUCATION",
+      "employment": "Erakond Parempoolsed esimees, rahvusvaheline  õigusekspert"
+  },
+  {
+      "nr": 159,
+      "firstName": "RAINER",
+      "lastName": "SAKS",
+      "ehak": "0000",
+      "electoralDistrictNr": 1,
+      "applicationId": 11197,
+      "politicalAffiliationName": "Erakond Parempoolsed",
+      "politicalAssociationName": "Erakond Parempoolsed",
+      "dateOfBirth": "19.09.1967",
+      "contacts": {
+          "EMAIL": "Rainer.saks@parempoolsed.ee"
+      },
+      "education": "HIGHER_EDUCATION",
+      "employment": "Cybexer Technologies, juhtkonna liige"
+  },
+  {
+      "nr": 160,
+      "firstName": "ILMAR",
+      "lastName": "RAAG",
+      "ehak": "0000",
+      "electoralDistrictNr": 1,
+      "applicationId": 11198,
+      "politicalAffiliationName": "Erakond Parempoolsed",
+      "politicalAssociationName": "Erakond Parempoolsed",
+      "dateOfBirth": "21.05.1968",
+      "contacts": {
+          "EMAIL": "ilmar.raag@parempoolsed.ee",
+          "FACEBOOK": "https://www.facebook.com/Ilmar.Raag.eestikeeles"
+      },
+      "education": "HIGHER_EDUCATION",
+      "employment": "vabakutseline filmirežissöör"
+  },
+  {
+      "nr": 161,
+      "firstName": "ANNELA",
+      "lastName": "ANGER-KRAAVI",
+      "ehak": "0000",
+      "electoralDistrictNr": 1,
+      "applicationId": 11199,
+      "politicalAffiliationName": "Erakond Parempoolsed",
+      "politicalAssociationName": "Erakond Parempoolsed",
+      "dateOfBirth": "24.03.1972",
+      "contacts": {
+          "EMAIL": "annela.anger-kraavi@parempoolsed.ee"
+      },
+      "education": "HIGHER_EDUCATION",
+      "employment": "Tartu Ülikooli Välis-Eesti külalisprofessor, Cambridge'i Ülikooli kliimamuutuste poliitika uurimisgrupi teadusdirektor"
+  },
+  {
+      "nr": 162,
+      "firstName": "MARTI",
+      "lastName": "AAVIK",
+      "ehak": "0000",
+      "electoralDistrictNr": 1,
+      "applicationId": 11200,
+      "politicalAffiliationName": "Erakond Parempoolsed",
+      "politicalAssociationName": "Erakond Parempoolsed",
+      "dateOfBirth": "18.10.1972",
+      "contacts": {
+          "EMAIL": "Marti.aavik@parempoolsed.ee",
+          "FACEBOOK": "https://www.facebook.com/marti.aavik/"
+      },
+      "education": "HIGHER_EDUCATION",
+      "employment": "vabakutseline ajakirjanik "
+  },
+  {
+      "nr": 164,
+      "firstName": "KADRI",
+      "lastName": "KULLMAN",
+      "ehak": "0000",
+      "electoralDistrictNr": 1,
+      "applicationId": 11201,
+      "politicalAffiliationName": "Erakond Parempoolsed",
+      "politicalAssociationName": "Erakond Parempoolsed",
+      "dateOfBirth": "02.02.1960",
+      "contacts": {
+          "PHONE": "+372-5010860",
+          "EMAIL": "kadri@dimela.ee",
+          "ADDRESS": ""
+      },
+      "education": "HIGHER_EDUCATION",
+      "employment": "Emajõe Halduse OÜ, juhatuse liige"
+  },
+  {
+      "nr": 165,
+      "firstName": "ANDRES",
+      "lastName": "KAARMANN",
+      "ehak": "0000",
+      "electoralDistrictNr": 1,
+      "applicationId": 11202,
+      "politicalAffiliationName": "Erakond Parempoolsed",
+      "politicalAssociationName": "Erakond Parempoolsed",
+      "dateOfBirth": "07.04.1976",
+      "contacts": {
+          "PHONE": "+372-5112059",
+          "EMAIL": "andres@kaarmann.ee",
+          "FACEBOOK": "https://www.facebook.com/andres.kaarmann"
+      },
+      "education": "HIGHER_EDUCATION",
+      "employment": "Saue Vallavalitsus, abivallavanem"
+  },
+  {
+      "nr": 166,
+      "firstName": "KRISTJAN",
+      "lastName": "VANASELJA",
+      "ehak": "0000",
+      "electoralDistrictNr": 1,
+      "applicationId": 11203,
+      "politicalAffiliationName": "Erakond Parempoolsed",
+      "politicalAssociationName": "Erakond Parempoolsed",
+      "dateOfBirth": "11.01.1981",
+      "contacts": {
+          "PHONE": "+372-5267371",
+          "EMAIL": "kristjan.vanaselja@parempoolsed.ee",
+          "ADDRESS": "Saare maakond, Saaremaa vald, Laevaranna küla, Kärmi",
+          "FACEBOOK": "https://www.facebook.com/kristjan.vanaselja/",
+          "TWITTER": "https://twitter.com/KristjanVanase1"
+      },
+      "education": "SECONDARY_EDUCATION",
+      "employment": "GoWorkaBit Estonia OÜ, juhatuse liige"
+  },
+  {
+      "nr": 163,
+      "firstName": "EERO",
+      "lastName": "RAUN",
+      "ehak": "0000",
+      "electoralDistrictNr": 1,
+      "applicationId": 11204,
+      "politicalAffiliationName": "Erakond Parempoolsed",
+      "politicalAssociationName": "Erakond Parempoolsed",
+      "dateOfBirth": "24.05.1971",
+      "contacts": {
+          "EMAIL": "eero.raun@parempoolsed.ee",
+          "TWITTER": "https://twitter.com/Eero_Raun"
+      },
+      "education": "HIGHER_EDUCATION",
+      "employment": "Integratsiooni Sihtasutus, projektijuht"
+  },
+  {
+      "nr": 122,
+      "firstName": "MARINA",
+      "lastName": "KALJURAND",
+      "ehak": "0000",
+      "electoralDistrictNr": 1,
+      "applicationId": 11205,
+      "politicalAffiliationName": "Sotsiaaldemokraatlik Erakond",
+      "politicalAssociationName": "Sotsiaaldemokraatlik Erakond",
+      "dateOfBirth": "06.09.1962",
+      "contacts": {
+          "PHONE": "+372-5116647",
+          "EMAIL": "marina@kaljurand.ee",
+          "FACEBOOK": "https://www.facebook.com/marinakaljurand",
+          "TWITTER": "https://twitter.com/marinakaljurand"
+      },
+      "education": "HIGHER_EDUCATION",
+      "employment": "Euroopa Parlament Euroopa Parlamendi saadik"
+  },
+  {
+      "nr": 156,
+      "firstName": "AIVAR",
+      "lastName": "RIISALU",
+      "ehak": "0000",
+      "electoralDistrictNr": 1,
+      "applicationId": 11206,
+      "politicalAffiliationName": "Eesti Keskerakond",
+      "politicalAssociationName": "Eesti Keskerakond",
+      "dateOfBirth": "13.03.1961",
+      "contacts": {
+          "EMAIL": "riisalu@extreme.ee",
+          "FACEBOOK": "https://www.facebook.com/AivarRiisalu"
+      },
+      "education": "HIGHER_EDUCATION",
+      "employment": "ettevõtja, Tallinna Linnavolikogu liige"
+  },
+  {
+      "nr": 151,
+      "firstName": "ERKI",
+      "lastName": "SAVISAAR",
+      "ehak": "0000",
+      "electoralDistrictNr": 1,
+      "applicationId": 11207,
+      "politicalAffiliationName": "Eesti Keskerakond",
+      "politicalAssociationName": "Eesti Keskerakond",
+      "dateOfBirth": "16.06.1978",
+      "contacts": {
+          "EMAIL": "erki@vinnivald.ee",
+          "FACEBOOK": "https://www.facebook.com/savisaarerki"
+      },
+      "education": "HIGHER_EDUCATION",
+      "employment": "Vinni Vallavalitsus, vallavanem"
+  },
+  {
+      "nr": 157,
+      "firstName": "JANA",
+      "lastName": "TOOM",
+      "ehak": "0000",
+      "electoralDistrictNr": 1,
+      "applicationId": 11208,
+      "politicalAffiliationName": "Eesti Keskerakond",
+      "politicalAssociationName": "Eesti Keskerakond",
+      "dateOfBirth": "15.10.1966",
+      "contacts": {
+          "PHONE": "+372-6720311",
+          "EMAIL": "info@yanatoom.ee",
+          "ADDRESS": "Narva mnt 31, Tallinn",
+          "FACEBOOK": "https://www.facebook.com/yana.toom"
+      },
+      "education": "SECONDARY_EDUCATION",
+      "employment": "Euroopa Parlament, parlamendi liige"
+  },
+  {
+      "nr": 152,
+      "firstName": "ANNELI",
+      "lastName": "OTT",
+      "ehak": "0000",
+      "electoralDistrictNr": 1,
+      "applicationId": 11209,
+      "politicalAffiliationName": "Eesti Keskerakond",
+      "politicalAssociationName": "Eesti Keskerakond",
+      "dateOfBirth": "02.05.1976",
+      "contacts": {
+          "EMAIL": "anneli@keskerakond.ee"
+      },
+      "education": "HIGHER_EDUCATION",
+      "employment": "Eesti Keskerakonna büroo, peasekretär"
+  },
+  {
+      "nr": 154,
+      "firstName": "JANEK",
+      "lastName": "MÄGGI",
+      "ehak": "0000",
+      "electoralDistrictNr": 1,
+      "applicationId": 11210,
+      "politicalAffiliationName": "Eesti Keskerakond",
+      "politicalAssociationName": "Eesti Keskerakond",
+      "dateOfBirth": "05.09.1973",
+      "contacts": {
+          "PHONE": "+372-5072989",
+          "EMAIL": "janek.maggi@powerhouse.ee",
+          "ADDRESS": "",
+          "FACEBOOK": "https://www.facebook.com/janek.maggi"
+      },
+      "education": "HIGHER_EDUCATION",
+      "employment": "Powerhouse OÜ, konsultant"
+  },
+  {
+      "nr": 155,
+      "firstName": "MONIKA",
+      "lastName": "HAUKANÕMM",
+      "ehak": "0000",
+      "electoralDistrictNr": 1,
+      "applicationId": 11211,
+      "politicalAffiliationName": "Eesti Keskerakond",
+      "politicalAssociationName": "Eesti Keskerakond",
+      "dateOfBirth": "22.05.1972",
+      "contacts": {
+          "EMAIL": "monika.haukanomm@gmail.com"
+      },
+      "education": "HIGHER_EDUCATION",
+      "employment": "Tallinna Linnavolikogu liige"
+  },
+  {
+      "nr": 153,
+      "firstName": "ANDREI",
+      "lastName": "KOROBEINIK",
+      "ehak": "0000",
+      "electoralDistrictNr": 1,
+      "applicationId": 11212,
+      "politicalAffiliationName": "Eesti Keskerakond",
+      "politicalAssociationName": "Eesti Keskerakond",
+      "dateOfBirth": "05.11.1980",
+      "contacts": {
+          "EMAIL": "andrei@korobeinik.ee",
+          "FACEBOOK": "https://www.facebook.com/AndreiKorobeinik"
+      },
+      "education": "SECONDARY_EDUCATION",
+      "employment": "Riigikogu liige"
+  },
+  {
+      "nr": 150,
+      "firstName": "LAURI",
+      "lastName": "LAATS",
+      "ehak": "0000",
+      "electoralDistrictNr": 1,
+      "applicationId": 11213,
+      "politicalAffiliationName": "Eesti Keskerakond",
+      "politicalAssociationName": "Eesti Keskerakond",
+      "dateOfBirth": "22.04.1981",
+      "contacts": {
+          "EMAIL": "lauri.laats@riigikogu.ee",
+          "FACEBOOK": "https://www.facebook.com/lauri.laats.1"
+      },
+      "education": "HIGHER_EDUCATION",
+      "employment": "Riigikogu liige"
+  },
+  {
+      "nr": 123,
+      "firstName": "SVEN",
+      "lastName": "MIKSER",
+      "ehak": "0000",
+      "electoralDistrictNr": 1,
+      "applicationId": 11214,
+      "politicalAffiliationName": "Sotsiaaldemokraatlik Erakond",
+      "politicalAssociationName": "Sotsiaaldemokraatlik Erakond",
+      "dateOfBirth": "08.11.1973",
+      "contacts": {
+          "EMAIL": "sven.mikser.ep@gmail.com",
+          "ADDRESS": ""
+      },
+      "education": "HIGHER_EDUCATION",
+      "employment": "Euroopa Parlamendi liige"
+  },
+  {
+      "nr": 127,
+      "firstName": "IVARI",
+      "lastName": "PADAR",
+      "ehak": "0000",
+      "electoralDistrictNr": 1,
+      "applicationId": 11215,
+      "politicalAffiliationName": "Sotsiaaldemokraatlik Erakond",
+      "politicalAssociationName": "Sotsiaaldemokraatlik Erakond",
+      "dateOfBirth": "12.03.1965",
+      "contacts": {
+          "PHONE": "+372-5131851",
+          "EMAIL": "ivari.padar@gmail.com"
+      },
+      "education": "HIGHER_EDUCATION",
+      "employment": "Võru vallavolikogu liige"
+  },
+  {
+      "nr": 130,
+      "firstName": "JEVGENI",
+      "lastName": "OSSINOVSKI",
+      "ehak": "0000",
+      "electoralDistrictNr": 1,
+      "applicationId": 11216,
+      "politicalAffiliationName": "Sotsiaaldemokraatlik Erakond",
+      "politicalAssociationName": "Sotsiaaldemokraatlik Erakond",
+      "dateOfBirth": "15.03.1986",
+      "contacts": {
+          "EMAIL": "kantselei@sotsid.ee",
+          "FACEBOOK": "https://www.facebook.com/jevgeni.ossinovski"
+      },
+      "education": "HIGHER_EDUCATION",
+      "employment": "Tallinna linnapea"
+  },
+  {
+      "nr": 131,
+      "firstName": "RIHO",
+      "lastName": "TERRAS",
+      "ehak": "0000",
+      "electoralDistrictNr": 1,
+      "applicationId": 11217,
+      "politicalAffiliationName": "ISAMAA Erakond",
+      "politicalAssociationName": "ISAMAA Erakond",
+      "dateOfBirth": "17.04.1967",
+      "contacts": {
+          "EMAIL": "riho.terras@isamaa.ee",
+          "FACEBOOK": "https://www.facebook.com/terraseuroopa",
+          "TWITTER": "https://twitter.com/RihoTerras"
+      },
+      "education": "HIGHER_EDUCATION",
+      "employment": "Euroopa Parlament, liige"
+  },
+  {
+      "nr": 132,
+      "firstName": "URMAS",
+      "lastName": "REINSALU",
+      "ehak": "0000",
+      "electoralDistrictNr": 1,
+      "applicationId": 11218,
+      "politicalAffiliationName": "ISAMAA Erakond",
+      "politicalAssociationName": "ISAMAA Erakond",
+      "dateOfBirth": "22.06.1975",
+      "contacts": {
+          "EMAIL": "urmas.reinsalu@isamaa.ee",
+          "FACEBOOK": "https://www.facebook.com/UReinsalu"
+      },
+      "education": "HIGHER_EDUCATION",
+      "employment": "Riigikogu, riigikogu liige"
+  },
+  {
+      "nr": 133,
+      "firstName": "URVE PARIS",
+      "lastName": "PALO",
+      "ehak": "0000",
+      "electoralDistrictNr": 1,
+      "applicationId": 11219,
+      "politicalAffiliationName": "ISAMAA Erakond",
+      "politicalAssociationName": "ISAMAA Erakond",
+      "dateOfBirth": "10.07.1972",
+      "contacts": {
+          "PHONE": "+372-5177912",
+          "EMAIL": "urve.palo@gmail.com",
+          "FACEBOOK": "https://www.facebook.com/urveparispalo"
+      },
+      "education": "HIGHER_EDUCATION",
+      "employment": "ERP Consulting OÜ, koolitaja"
+  },
+  {
+      "nr": 134,
+      "firstName": "RIINA",
+      "lastName": "SOLMAN",
+      "ehak": "0000",
+      "electoralDistrictNr": 1,
+      "applicationId": 11220,
+      "politicalAffiliationName": "ISAMAA Erakond",
+      "politicalAssociationName": "ISAMAA Erakond",
+      "dateOfBirth": "23.06.1972",
+      "contacts": {
+          "EMAIL": "riina.solman@riigikogu.ee"
+      },
+      "education": "HIGHER_EDUCATION",
+      "employment": "Riigikogu, riigikogu liige"
+  },
+  {
+      "nr": 135,
+      "firstName": "TÕNIS",
+      "lastName": "LUKAS",
+      "ehak": "0000",
+      "electoralDistrictNr": 1,
+      "applicationId": 11221,
+      "politicalAffiliationName": "ISAMAA Erakond",
+      "politicalAssociationName": "ISAMAA Erakond",
+      "dateOfBirth": "05.06.1962",
+      "contacts": {
+          "EMAIL": "tonis.lukas@riigikogu.ee"
+      },
+      "education": "HIGHER_EDUCATION",
+      "employment": "Riigikogu, riigikogu liige"
+  },
+  {
+      "nr": 136,
+      "firstName": "VIRVE",
+      "lastName": "LINDER",
+      "ehak": "0000",
+      "electoralDistrictNr": 1,
+      "applicationId": 11222,
+      "politicalAffiliationName": "ISAMAA Erakond",
+      "politicalAssociationName": "ISAMAA Erakond",
+      "dateOfBirth": "19.05.1985",
+      "contacts": {
+          "EMAIL": "virve.linder@mail.ee"
+      },
+      "education": "HIGHER_EDUCATION",
+      "employment": "puudub"
+  },
+  {
+      "nr": 137,
+      "firstName": "ÜLLAR",
+      "lastName": "SAAREMÄE",
+      "ehak": "0000",
+      "electoralDistrictNr": 1,
+      "applicationId": 11223,
+      "politicalAffiliationName": "ISAMAA Erakond",
+      "politicalAssociationName": "ISAMAA Erakond",
+      "dateOfBirth": "23.11.1969",
+      "contacts": {
+          "EMAIL": "yllarsaaremae@gmail.com"
+      },
+      "education": "HIGHER_EDUCATION",
+      "employment": "vabakutseline, lavastaja"
+  },
+  {
+      "nr": 138,
+      "firstName": "AHTI",
+      "lastName": "KALLIKORM",
+      "ehak": "0000",
+      "electoralDistrictNr": 1,
+      "applicationId": 11224,
+      "politicalAffiliationName": "ISAMAA Erakond",
+      "politicalAssociationName": "ISAMAA Erakond",
+      "dateOfBirth": "03.01.1963",
+      "contacts": {
+          "EMAIL": "ahti.kallikorm@isamaa.ee",
+          "FACEBOOK": "https://www.facebook.com/ahtikallikorm",
+          "TWITTER": "https://twitter.com/AhtiKallikorm"
+      },
+      "education": "HIGHER_EDUCATION",
+      "employment": "AS Confido, nõukogu liige"
+  },
+  {
+      "nr": 139,
+      "firstName": "JÜRI",
+      "lastName": "RATAS",
+      "ehak": "0000",
+      "electoralDistrictNr": 1,
+      "applicationId": 11225,
+      "politicalAffiliationName": "ISAMAA Erakond",
+      "politicalAssociationName": "ISAMAA Erakond",
+      "dateOfBirth": "02.07.1978",
+      "contacts": {
+          "PHONE": "+372-5113078",
+          "EMAIL": "jyri.ratas@riigikogu.ee",
+          "FACEBOOK": "https://www.facebook.com/ratasjuri"
+      },
+      "education": "HIGHER_EDUCATION",
+      "employment": "Riigikogu Kantselei, Riigikogu liige"
+  },
+  {
+      "nr": 125,
+      "firstName": "TANEL",
+      "lastName": "KIIK",
+      "ehak": "0000",
+      "electoralDistrictNr": 1,
+      "applicationId": 11226,
+      "politicalAffiliationName": "Sotsiaaldemokraatlik Erakond",
+      "politicalAssociationName": "Sotsiaaldemokraatlik Erakond",
+      "dateOfBirth": "23.01.1989",
+      "contacts": {
+          "EMAIL": "tanel.kiik@riigikogu.ee",
+          "FACEBOOK": "https://www.facebook.com/kiiktanel",
+          "TWITTER": "https://twitter.com/TanelKiik"
+      },
+      "education": "HIGHER_EDUCATION",
+      "employment": "Riigikogu liige"
+  },
+  {
+      "nr": 117,
+      "firstName": "IGOR",
+      "lastName": "TARO",
+      "ehak": "0000",
+      "electoralDistrictNr": 1,
+      "applicationId": 11227,
+      "politicalAffiliationName": "Erakond Eesti 200",
+      "politicalAssociationName": "Erakond Eesti 200",
+      "dateOfBirth": "01.08.1981",
+      "contacts": {
+          "PHONE": "+372-5273985",
+          "EMAIL": "igor.taro@riigikogu.ee"
+      },
+      "education": "HIGHER_EDUCATION",
+      "employment": "Riigikogu, Riigikogu liige, keskkonnakomisjoni esimees"
+  },
+  {
+      "nr": 118,
+      "firstName": "IRJA",
+      "lastName": "LUTSAR",
+      "ehak": "0000",
+      "electoralDistrictNr": 1,
+      "applicationId": 11228,
+      "politicalAffiliationName": "Erakond Eesti 200",
+      "politicalAssociationName": "Erakond Eesti 200",
+      "dateOfBirth": "20.07.1954",
+      "contacts": {
+          "PHONE": "+372-51911800",
+          "EMAIL": "Irja.lutsar@ut.ee",
+          "ADDRESS": "Õuna 23 -9, Tartu"
+      },
+      "education": "HIGHER_EDUCATION",
+      "employment": "EV Riigikogu"
+  },
+  {
+      "nr": 115,
+      "firstName": "GRIGORE-KALEV",
+      "lastName": "STOICESCU",
+      "ehak": "0000",
+      "electoralDistrictNr": 1,
+      "applicationId": 11229,
+      "politicalAffiliationName": "Erakond Eesti 200",
+      "politicalAssociationName": "Erakond Eesti 200",
+      "dateOfBirth": "02.09.1965",
+      "contacts": {
+          "EMAIL": "kalev.stoicescu@riigikogu.ee"
+      },
+      "education": "HIGHER_EDUCATION",
+      "employment": "Riigikogu, Riigikogu liige, Riigikaitsekomisjoni esimees"
+  },
+  {
+      "nr": 116,
+      "firstName": "LIISA-LY",
+      "lastName": "PAKOSTA",
+      "ehak": "0000",
+      "electoralDistrictNr": 1,
+      "applicationId": 11230,
+      "politicalAffiliationName": "Erakond Eesti 200",
+      "politicalAssociationName": "Erakond Eesti 200",
+      "dateOfBirth": "03.09.1969",
+      "contacts": {
+          "PHONE": "+372-5026191",
+          "EMAIL": "liisa@pakosta.ee",
+          "FACEBOOK": "https://www.facebook.com/liisapakosta/",
+          "TWITTER": "https://twitter.com/LiisaPakosta"
+      },
+      "education": "HIGHER_EDUCATION",
+      "employment": "Riigikogu, Euroopa Liidu asjade komisjoni esimees, õiguskomisjoni liige, Riigikogu liige."
+  },
+  {
+      "nr": 114,
+      "firstName": "KRISTINA",
+      "lastName": "KALLAS",
+      "ehak": "0000",
+      "electoralDistrictNr": 1,
+      "applicationId": 11231,
+      "politicalAffiliationName": "Erakond Eesti 200",
+      "politicalAssociationName": "Erakond Eesti 200",
+      "dateOfBirth": "29.01.1976",
+      "contacts": {
+          "EMAIL": "kristina@eesti200.ee",
+          "FACEBOOK": "https://www.facebook.com/kristina.kallas.9/"
+      },
+      "education": "HIGHER_EDUCATION",
+      "employment": "Vabariigi Valitsuse liige, haridus- ja teadusminister"
+  },
+  {
+      "nr": 113,
+      "firstName": "MARGUS",
+      "lastName": "TSAHKNA",
+      "ehak": "0000",
+      "electoralDistrictNr": 1,
+      "applicationId": 11232,
+      "politicalAffiliationName": "Erakond Eesti 200",
+      "politicalAssociationName": "Erakond Eesti 200",
+      "dateOfBirth": "13.04.1977",
+      "contacts": {
+          "PHONE": "+372-5150618",
+          "EMAIL": "margus.tsahkna@gmail.com",
+          "ADDRESS": "",
+          "FACEBOOK": "https://www.facebook.com/margus.tsahkna"
+      },
+      "education": "SECONDARY_EDUCATION",
+      "employment": "Vabariigi Valitsuse liige,  välisminister"
+  },
+  {
+      "nr": 121,
+      "firstName": "INDREK",
+      "lastName": "TARAND",
+      "ehak": "0000",
+      "electoralDistrictNr": 1,
+      "applicationId": 11233,
+      "politicalAffiliationName": "-",
+      "politicalAssociationName": "Erakond Eesti 200",
+      "dateOfBirth": "03.02.1964",
+      "contacts": {
+          "EMAIL": "indrek.tarand@gmail.com",
+          "FACEBOOK": "https://www.facebook.com/indrek.tarand",
+          "TWITTER": "https://twitter.com/indrektarand"
+      },
+      "education": "HIGHER_EDUCATION",
+      "employment": "Tallinna Ühisgümnaasium, õpetaja"
+  },
+  {
+      "nr": 119,
+      "firstName": "HENDRIK JOHANNES",
+      "lastName": "TERRAS",
+      "ehak": "0000",
+      "electoralDistrictNr": 1,
+      "applicationId": 11234,
+      "politicalAffiliationName": "Erakond Eesti 200",
+      "politicalAssociationName": "Erakond Eesti 200",
+      "dateOfBirth": "14.06.1993",
+      "contacts": {
+          "EMAIL": "hendrikjohannes.terras@gmail.com"
+      },
+      "education": "HIGHER_EDUCATION",
+      "employment": "Põhiseaduskomisjoni esimees"
+  },
+  {
+      "nr": 120,
+      "firstName": "KADRI",
+      "lastName": "TALI",
+      "ehak": "0000",
+      "electoralDistrictNr": 1,
+      "applicationId": 11235,
+      "politicalAffiliationName": "Erakond Eesti 200",
+      "politicalAssociationName": "Erakond Eesti 200",
+      "dateOfBirth": "18.06.1972",
+      "contacts": {
+          "PHONE": "+372-5159243",
+          "EMAIL": "kadri.tali@riigikogu.ee",
+          "FACEBOOK": "https://www.facebook.com/KadriTaliPro"
+      },
+      "education": "HIGHER_EDUCATION",
+      "employment": "Riigikogu liige"
+  },
+  {
+      "nr": 124,
+      "firstName": "KATRI",
+      "lastName": "RAIK",
+      "ehak": "0000",
+      "electoralDistrictNr": 1,
+      "applicationId": 11236,
+      "politicalAffiliationName": "Sotsiaaldemokraatlik Erakond",
+      "politicalAssociationName": "Sotsiaaldemokraatlik Erakond",
+      "dateOfBirth": "26.10.1967",
+      "contacts": {
+          "PHONE": "+372-5153394",
+          "EMAIL": "katri.raik@gmail.com",
+          "FACEBOOK": "https://facebook.com/katri.raik"
+      },
+      "education": "HIGHER_EDUCATION",
+      "employment": "Tartu Ülikool, Tartu Ülikooli esindaja Ida-Virumaal"
+  },
+  {
+      "nr": 167,
+      "firstName": "TANEL",
+      "lastName": "TALVE",
+      "ehak": "0000",
+      "electoralDistrictNr": 1,
+      "applicationId": 11237,
+      "politicalAffiliationName": "-",
+      "politicalAssociationName": "Üksikkandidaadid",
+      "dateOfBirth": "13.08.1976",
+      "contacts": {
+          "EMAIL": "tanel.talve@gmail.com",
+          "FACEBOOK": "https://www.facebook.com/tanel.talve"
+      },
+      "education": "HIGHER_EDUCATION",
+      "employment": "MTÜ Eesti Külaliikumine Kodukant, juhatuse liige"
+  },
+  {
+      "nr": 101,
+      "firstName": "AIVO",
+      "lastName": "PETERSON",
+      "ehak": "0000",
+      "electoralDistrictNr": 1,
+      "applicationId": 11239,
+      "politicalAffiliationName": "KOOS organisatsioon osutab suveräänsusele",
+      "politicalAssociationName": "KOOS organisatsioon osutab suveräänsusele",
+      "dateOfBirth": "13.05.1970",
+      "contacts": {
+          "PHONE": "+372-56600111",
+          "EMAIL": "info@eekoos.ee"
+      },
+      "education": "SECONDARY_EDUCATION",
+      "employment": "Tähevalgus OÜ"
+  },
+  {
+      "nr": 171,
+      "firstName": "KALLE",
+      "lastName": "GRÜNTHAL",
+      "ehak": "0000",
+      "electoralDistrictNr": 1,
+      "applicationId": 11240,
+      "politicalAffiliationName": "-",
+      "politicalAssociationName": "Üksikkandidaadid",
+      "dateOfBirth": "24.02.1960",
+      "contacts": {
+          "EMAIL": "kalle.grynthal@riigikogu.ee"
+      },
+      "education": "SECONDARY_EDUCATION",
+      "employment": "Riigikogu, Riigikogu liige"
+  },
+  {
+      "nr": 111,
+      "firstName": "EVELYN",
+      "lastName": "SEPP",
+      "ehak": "0000",
+      "electoralDistrictNr": 1,
+      "applicationId": 11242,
+      "politicalAffiliationName": "Erakond Eestimaa Rohelised",
+      "politicalAssociationName": "Erakond Eestimaa Rohelised",
+      "dateOfBirth": "13.07.1972",
+      "contacts": {
+          "EMAIL": "evelyn.sepp@rohelised.ee",
+          "TWITTER": "https://www.twitter.com/EvelynSepp"
+      },
+      "education": "SECONDARY_EDUCATION",
+      "employment": "Erakond Eestimaa Rohelised, kaasjuht"
+  },
+  {
+      "nr": 172,
+      "firstName": "ALINA",
+      "lastName": "LERNER-VILU",
+      "ehak": "0000",
+      "electoralDistrictNr": 1,
+      "applicationId": 11243,
+      "politicalAffiliationName": "Erakond Eestimaa Rohelised",
+      "politicalAssociationName": "Erakond Eestimaa Rohelised",
+      "dateOfBirth": "29.04.1997",
+      "contacts": {
+          "EMAIL": "alina.lerner.al@gmail.com",
+          "FACEBOOK": "https://www.facebook.com/alina.lerner.al"
+      },
+      "education": "HIGHER_EDUCATION",
+      "employment": "Keskkonnaagentuur, peaspetsialist"
+  },
+  {
+      "nr": 173,
+      "firstName": "OLEV-ANDRES",
+      "lastName": "TINN",
+      "ehak": "0000",
+      "electoralDistrictNr": 1,
+      "applicationId": 11244,
+      "politicalAffiliationName": "Erakond Eestimaa Rohelised",
+      "politicalAssociationName": "Erakond Eestimaa Rohelised",
+      "dateOfBirth": "14.01.1973",
+      "contacts": {
+          "PHONE": "+372-5011053",
+          "EMAIL": "olev.tinn@gmail.com"
+      },
+      "education": "HIGHER_EDUCATION",
+      "employment": "OÜ Kungros, juhatuse liige"
+  },
+  {
+      "nr": 174,
+      "firstName": "RIIN",
+      "lastName": "EHIN",
+      "ehak": "0000",
+      "electoralDistrictNr": 1,
+      "applicationId": 11245,
+      "politicalAffiliationName": "Erakond Eestimaa Rohelised",
+      "politicalAssociationName": "Erakond Eestimaa Rohelised",
+      "dateOfBirth": "12.01.1968",
+      "contacts": {
+          "EMAIL": "riin.ehin@gmail.com"
+      },
+      "education": "HIGHER_EDUCATION",
+      "employment": "Contenta OÜ, tegevdirektor"
+  },
+  {
+      "nr": 175,
+      "firstName": "KAIA",
+      "lastName": "KONSAP",
+      "ehak": "0000",
+      "electoralDistrictNr": 1,
+      "applicationId": 11246,
+      "politicalAffiliationName": "-",
+      "politicalAssociationName": "Erakond Eestimaa Rohelised",
+      "dateOfBirth": "12.08.1988",
+      "contacts": {
+          "EMAIL": "kaia.konsap@gmail.com"
+      },
+      "education": "HIGHER_EDUCATION",
+      "employment": "Omis OÜ, tarkvarakoolitaja"
+  },
+  {
+      "nr": 176,
+      "firstName": "LIINA",
+      "lastName": "FREIVALD",
+      "ehak": "0000",
+      "electoralDistrictNr": 1,
+      "applicationId": 11247,
+      "politicalAffiliationName": "Erakond Eestimaa Rohelised",
+      "politicalAssociationName": "Erakond Eestimaa Rohelised",
+      "dateOfBirth": "07.05.1977",
+      "contacts": {
+          "PHONE": "+372-5201280",
+          "EMAIL": "liina.freivald@gmail.com",
+          "FACEBOOK": "https://www.facebook.com/liina.freivald/",
+          "TWITTER": "https://www.twitter.com/liinafreivald"
+      },
+      "education": "SECONDARY_EDUCATION",
+      "employment": "Microsoft Development Center Estonia OÜ, Senior Program Manager"
+  },
+  {
+      "nr": 177,
+      "firstName": "TUULA",
+      "lastName": "RAIDNA",
+      "ehak": "0000",
+      "electoralDistrictNr": 1,
+      "applicationId": 11248,
+      "politicalAffiliationName": "Erakond Eestimaa Rohelised",
+      "politicalAssociationName": "Erakond Eestimaa Rohelised",
+      "dateOfBirth": "16.05.1980",
+      "contacts": {
+          "EMAIL": "tuula.raidna@gmail.com"
+      },
+      "education": "SECONDARY_EDUCATION",
+      "employment": "OÜ Hipih, jätkusuutliku töökeskkonna koolitaja"
+  },
+  {
+      "nr": 178,
+      "firstName": "MARKO",
+      "lastName": "KAASIK",
+      "ehak": "0000",
+      "electoralDistrictNr": 1,
+      "applicationId": 11249,
+      "politicalAffiliationName": "Erakond Eestimaa Rohelised",
+      "politicalAssociationName": "Erakond Eestimaa Rohelised",
+      "dateOfBirth": "25.07.1966",
+      "contacts": {
+          "PHONE": "+372-5206174",
+          "EMAIL": "marko.kaasik@ut.ee",
+          "FACEBOOK": "https://www.facebook.com/marko.kaasik.9"
+      },
+      "education": "HIGHER_EDUCATION",
+      "employment": "TÜ füüsika instituudi õhusaaste modelleerimise kaasprofessor"
+  },
+  {
+      "nr": 112,
+      "firstName": "RASMUS",
+      "lastName": "LAHTVEE",
+      "ehak": "0000",
+      "electoralDistrictNr": 1,
+      "applicationId": 11250,
+      "politicalAffiliationName": "Erakond Eestimaa Rohelised",
+      "politicalAssociationName": "Erakond Eestimaa Rohelised",
+      "dateOfBirth": "17.09.1980",
+      "contacts": {
+          "PHONE": "+372-53007376",
+          "EMAIL": "rasmus.lahtvee@rohelised.ee",
+          "FACEBOOK": "https://www.facebook.com/lahtvee.rasmus"
+      },
+      "education": "SECONDARY_EDUCATION",
+      "employment": "Erakond Eestimaa Rohelised, asejuht"
+  }
+]
