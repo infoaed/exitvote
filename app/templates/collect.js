@@ -253,7 +253,7 @@ function init(){
   
   message = document.getElementById("message");
 
-  source = new SSE('/api/bulletin/' + bulletin_token);
+  source = new SSE('/api/bulletin');
 
   countdown = document.getElementById("countdown");
 
