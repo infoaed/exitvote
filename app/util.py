@@ -96,13 +96,23 @@ def create_choice_html(r, index, classname, typename, ordered = False):
 
         for (i = 0; i < acc.length; i++) {
         acc[i].addEventListener("click", function() {
+            // Close all other accordions before.
+            var siblings = document.querySelectorAll('.accordion.active');
+            for (var j = 0; j < siblings.length; j++) {
+                if (this !== siblings[j]) {
+                    siblings[j].classList.toggle("active");
+                    var panel = siblings[j].nextElementSibling;
+                    panel.style.maxHeight = null;
+                }
+            }
+
             this.classList.toggle("active");
             var panel = this.nextElementSibling;
             if (panel.style.maxHeight) {
-            panel.style.maxHeight = null;
+                panel.style.maxHeight = null;
             } else {
-            panel.style.maxHeight = panel.scrollHeight + "px";
-            } 
+                panel.style.maxHeight = panel.scrollHeight + "px";
+            }
         });
         }
     </script>
