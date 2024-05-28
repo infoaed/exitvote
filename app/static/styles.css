@@ -262,9 +262,8 @@ ol {
 }
 
 .accordion {
-  /* color: #444; */
   cursor: pointer;
-  padding: 18px;
+  padding: 2px;
   border: none;
   text-align: left;
   outline: none;
@@ -277,10 +276,9 @@ ol {
 
 .accordion:after {
   content: '\002B';
-  /* color: #777; */
   font-weight: bold;
-  float: right;
-  margin-left: 5px;
+  float: left;
+  margin-right: 5px;
 }
 
 .active:after {
@@ -288,7 +286,7 @@ ol {
 }
 
 .panel {
-  padding: 0 18px;
+  padding: 0 2px;
   max-height: 0;
   overflow: hidden;
   transition: max-height 0.2s ease-out;
