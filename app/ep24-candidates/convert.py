@@ -5,16 +5,17 @@ def map_data(data):
   for item in data:
     political_association = item["politicalAssociationName"]
     candidate_name = f"{item['firstName']} {item['lastName']}"
+    candidate_number = item['nr']
     found = False
     for entry in result:
       if entry["politicalAssociationName"] == political_association:
-        entry["candidates"].append(candidate_name)
+        entry["candidates"].append({"name": candidate_name, "number": candidate_number})
         found = True
         break
     if not found:
       result.append({
           "politicalAssociationName": political_association,
-          "candidates": [candidate_name]
+          "candidates": [{"name": candidate_name, "number": candidate_number}]
       })
   return result
 

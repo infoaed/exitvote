@@ -84,7 +84,7 @@ def create_choice_html(r, index, classname, typename, ordered = False):
         html += f'<div class="panel">'
         for candidate in association["candidates"]:
             html += '  <div class="candidate">'
-            html += f'<input itemprop="actionOption" class="{classname}" type="{typename}" name="{r_name}" value="{candidate}" disabled> <label itemprop="name" for="{candidate}">{candidate}</label><br>'
+            html += f'<input itemprop="actionOption" class="{classname}" type="{typename}" name="{r_name}" value="{candidate["number"]}" disabled> <label itemprop="name" for="{candidate["number"]}">{candidate["name"]} ({candidate["number"]})</label><br>'
             html += '  </div>'
         html += '</div>'
     html += '</fieldset></p>'

@@ -2,129 +2,363 @@
   {
     "politicalAssociationName": "\u00dcksikkandidaadid",
     "candidates": [
-      "VSEVOLOD J\u00dcRGENSON",
-      "ANDRES INN",
-      "MIKE CALAMUS",
-      "TANEL TALVE",
-      "KALLE GR\u00dcNTHAL"
+      {
+        "name": "VSEVOLOD J\u00dcRGENSON",
+        "number": 169
+      },
+      {
+        "name": "ANDRES INN",
+        "number": 170
+      },
+      {
+        "name": "MIKE CALAMUS",
+        "number": 168
+      },
+      {
+        "name": "TANEL TALVE",
+        "number": 167
+      },
+      {
+        "name": "KALLE GR\u00dcNTHAL",
+        "number": 171
+      }
     ]
   },
   {
     "politicalAssociationName": "Eesti Reformierakond",
     "candidates": [
-      "URMAS PAET",
-      "YOKO ALENDER",
-      "LUUKAS KRISTJAN ILVES",
-      "MARIA JUFEREVA-SKURATOVSKI",
-      "MARKO MIHKELSON",
-      "HANAH LAHE",
-      "KARMEN JOLLER",
-      "MAARJA METSTAK",
-      "HANNO PEVKUR"
+      {
+        "name": "URMAS PAET",
+        "number": 140
+      },
+      {
+        "name": "YOKO ALENDER",
+        "number": 141
+      },
+      {
+        "name": "LUUKAS KRISTJAN ILVES",
+        "number": 142
+      },
+      {
+        "name": "MARIA JUFEREVA-SKURATOVSKI",
+        "number": 143
+      },
+      {
+        "name": "MARKO MIHKELSON",
+        "number": 144
+      },
+      {
+        "name": "HANAH LAHE",
+        "number": 145
+      },
+      {
+        "name": "KARMEN JOLLER",
+        "number": 146
+      },
+      {
+        "name": "MAARJA METSTAK",
+        "number": 147
+      },
+      {
+        "name": "HANNO PEVKUR",
+        "number": 148
+      }
     ]
   },
   {
     "politicalAssociationName": "Eesti Konservatiivne Rahvaerakond",
     "candidates": [
-      "MARTIN HELME",
-      "ANTI POOLAMETS",
-      "HELLE-MOONIKA HELME",
-      "HENN P\u00d5LLUAAS",
-      "SIIM POHLAK",
-      "RAIN EPLER",
-      "ARVO ALLER",
-      "JAAK MADISON",
-      "MERLE KIVEST"
+      {
+        "name": "MARTIN HELME",
+        "number": 102
+      },
+      {
+        "name": "ANTI POOLAMETS",
+        "number": 103
+      },
+      {
+        "name": "HELLE-MOONIKA HELME",
+        "number": 104
+      },
+      {
+        "name": "HENN P\u00d5LLUAAS",
+        "number": 105
+      },
+      {
+        "name": "SIIM POHLAK",
+        "number": 106
+      },
+      {
+        "name": "RAIN EPLER",
+        "number": 108
+      },
+      {
+        "name": "ARVO ALLER",
+        "number": 109
+      },
+      {
+        "name": "JAAK MADISON",
+        "number": 110
+      },
+      {
+        "name": "MERLE KIVEST",
+        "number": 107
+      }
     ]
   },
   {
     "politicalAssociationName": "Sotsiaaldemokraatlik Erakond",
     "candidates": [
-      "RIINA SIKKUT",
-      "VOOTELE P\u00c4I",
-      "NATALIE METS",
-      "MARINA KALJURAND",
-      "SVEN MIKSER",
-      "IVARI PADAR",
-      "JEVGENI OSSINOVSKI",
-      "TANEL KIIK",
-      "KATRI RAIK"
+      {
+        "name": "RIINA SIKKUT",
+        "number": 126
+      },
+      {
+        "name": "VOOTELE P\u00c4I",
+        "number": 129
+      },
+      {
+        "name": "NATALIE METS",
+        "number": 128
+      },
+      {
+        "name": "MARINA KALJURAND",
+        "number": 122
+      },
+      {
+        "name": "SVEN MIKSER",
+        "number": 123
+      },
+      {
+        "name": "IVARI PADAR",
+        "number": 127
+      },
+      {
+        "name": "JEVGENI OSSINOVSKI",
+        "number": 130
+      },
+      {
+        "name": "TANEL KIIK",
+        "number": 125
+      },
+      {
+        "name": "KATRI RAIK",
+        "number": 124
+      }
     ]
   },
   {
     "politicalAssociationName": "Eesti Keskerakond",
     "candidates": [
-      "MIHHAIL K\u00d5LVART",
-      "AIVAR RIISALU",
-      "ERKI SAVISAAR",
-      "JANA TOOM",
-      "ANNELI OTT",
-      "JANEK M\u00c4GGI",
-      "MONIKA HAUKAN\u00d5MM",
-      "ANDREI KOROBEINIK",
-      "LAURI LAATS"
+      {
+        "name": "MIHHAIL K\u00d5LVART",
+        "number": 149
+      },
+      {
+        "name": "AIVAR RIISALU",
+        "number": 156
+      },
+      {
+        "name": "ERKI SAVISAAR",
+        "number": 151
+      },
+      {
+        "name": "JANA TOOM",
+        "number": 157
+      },
+      {
+        "name": "ANNELI OTT",
+        "number": 152
+      },
+      {
+        "name": "JANEK M\u00c4GGI",
+        "number": 154
+      },
+      {
+        "name": "MONIKA HAUKAN\u00d5MM",
+        "number": 155
+      },
+      {
+        "name": "ANDREI KOROBEINIK",
+        "number": 153
+      },
+      {
+        "name": "LAURI LAATS",
+        "number": 150
+      }
     ]
   },
   {
     "politicalAssociationName": "Erakond Parempoolsed",
     "candidates": [
-      "LAVLY PERLING",
-      "RAINER SAKS",
-      "ILMAR RAAG",
-      "ANNELA ANGER-KRAAVI",
-      "MARTI AAVIK",
-      "KADRI KULLMAN",
-      "ANDRES KAARMANN",
-      "KRISTJAN VANASELJA",
-      "EERO RAUN"
+      {
+        "name": "LAVLY PERLING",
+        "number": 158
+      },
+      {
+        "name": "RAINER SAKS",
+        "number": 159
+      },
+      {
+        "name": "ILMAR RAAG",
+        "number": 160
+      },
+      {
+        "name": "ANNELA ANGER-KRAAVI",
+        "number": 161
+      },
+      {
+        "name": "MARTI AAVIK",
+        "number": 162
+      },
+      {
+        "name": "KADRI KULLMAN",
+        "number": 164
+      },
+      {
+        "name": "ANDRES KAARMANN",
+        "number": 165
+      },
+      {
+        "name": "KRISTJAN VANASELJA",
+        "number": 166
+      },
+      {
+        "name": "EERO RAUN",
+        "number": 163
+      }
     ]
   },
   {
     "politicalAssociationName": "ISAMAA Erakond",
     "candidates": [
-      "RIHO TERRAS",
-      "URMAS REINSALU",
-      "URVE PARIS PALO",
-      "RIINA SOLMAN",
-      "T\u00d5NIS LUKAS",
-      "VIRVE LINDER",
-      "\u00dcLLAR SAAREM\u00c4E",
-      "AHTI KALLIKORM",
-      "J\u00dcRI RATAS"
+      {
+        "name": "RIHO TERRAS",
+        "number": 131
+      },
+      {
+        "name": "URMAS REINSALU",
+        "number": 132
+      },
+      {
+        "name": "URVE PARIS PALO",
+        "number": 133
+      },
+      {
+        "name": "RIINA SOLMAN",
+        "number": 134
+      },
+      {
+        "name": "T\u00d5NIS LUKAS",
+        "number": 135
+      },
+      {
+        "name": "VIRVE LINDER",
+        "number": 136
+      },
+      {
+        "name": "\u00dcLLAR SAAREM\u00c4E",
+        "number": 137
+      },
+      {
+        "name": "AHTI KALLIKORM",
+        "number": 138
+      },
+      {
+        "name": "J\u00dcRI RATAS",
+        "number": 139
+      }
     ]
   },
   {
     "politicalAssociationName": "Erakond Eesti 200",
     "candidates": [
-      "IGOR TARO",
-      "IRJA LUTSAR",
-      "GRIGORE-KALEV STOICESCU",
-      "LIISA-LY PAKOSTA",
-      "KRISTINA KALLAS",
-      "MARGUS TSAHKNA",
-      "INDREK TARAND",
-      "HENDRIK JOHANNES TERRAS",
-      "KADRI TALI"
+      {
+        "name": "IGOR TARO",
+        "number": 117
+      },
+      {
+        "name": "IRJA LUTSAR",
+        "number": 118
+      },
+      {
+        "name": "GRIGORE-KALEV STOICESCU",
+        "number": 115
+      },
+      {
+        "name": "LIISA-LY PAKOSTA",
+        "number": 116
+      },
+      {
+        "name": "KRISTINA KALLAS",
+        "number": 114
+      },
+      {
+        "name": "MARGUS TSAHKNA",
+        "number": 113
+      },
+      {
+        "name": "INDREK TARAND",
+        "number": 121
+      },
+      {
+        "name": "HENDRIK JOHANNES TERRAS",
+        "number": 119
+      },
+      {
+        "name": "KADRI TALI",
+        "number": 120
+      }
     ]
   },
   {
     "politicalAssociationName": "KOOS organisatsioon osutab suver\u00e4\u00e4nsusele",
     "candidates": [
-      "AIVO PETERSON"
+      {
+        "name": "AIVO PETERSON",
+        "number": 101
+      }
     ]
   },
   {
     "politicalAssociationName": "Erakond Eestimaa Rohelised",
     "candidates": [
-      "EVELYN SEPP",
-      "ALINA LERNER-VILU",
-      "OLEV-ANDRES TINN",
-      "RIIN EHIN",
-      "KAIA KONSAP",
-      "LIINA FREIVALD",
-      "TUULA RAIDNA",
-      "MARKO KAASIK",
-      "RASMUS LAHTVEE"
+      {
+        "name": "EVELYN SEPP",
+        "number": 111
+      },
+      {
+        "name": "ALINA LERNER-VILU",
+        "number": 172
+      },
+      {
+        "name": "OLEV-ANDRES TINN",
+        "number": 173
+      },
+      {
+        "name": "RIIN EHIN",
+        "number": 174
+      },
+      {
+        "name": "KAIA KONSAP",
+        "number": 175
+      },
+      {
+        "name": "LIINA FREIVALD",
+        "number": 176
+      },
+      {
+        "name": "TUULA RAIDNA",
+        "number": 177
+      },
+      {
+        "name": "MARKO KAASIK",
+        "number": 178
+      },
+      {
+        "name": "RASMUS LAHTVEE",
+        "number": 112
+      }
     ]
   }
 ]
