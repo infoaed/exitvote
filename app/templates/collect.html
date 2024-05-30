@@ -23,11 +23,12 @@
     {% endblock static -%}
     
   {% block content -%}
-  
+
   <p>
     <textarea itemscope itemtype="https://schema.org/DataFeed" id="votes" rows="12" cols="50" wrap="off" readonly>{{ votes }}</textarea>
   </p>
-  
+  <a href="/message-board.csv">{{ _("Download all votes") }}</a>
+
   <span id="freeze">
     
     <form id="vote_form" name="vote_form" method="post" action="/api/vote">

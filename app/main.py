@@ -10,7 +10,7 @@ from starlette.routing import Route, Mount
 from starlette.staticfiles import StaticFiles
 from starlette.middleware import Middleware
 from starlette.templating import Jinja2Templates
-from starlette.responses import  JSONResponse
+from starlette.responses import  JSONResponse, StreamingResponse
 from sse_starlette.sse import EventSourceResponse
 
 from os import getenv
@@ -560,7 +560,25 @@ async def get_app_stats(req):
     status["db_connections"] = {"pool_size": app.state.pool.get_size(),  "idle": app.state.pool.get_idle_size(), "active": app.state.pool.get_size()}
 
     return JSONResponse(status)
-    
+
+async def voters_as_csv():
+    ballot_field = "content" # TODO: ballot can be can be hashed
+    async with app.state.pool.acquire() as con:
+        async with con.transaction():
+            cur = con.cursor(f"SELECT pseudonym, {ballot_field} as content, added, number FROM pseudo.vote WHERE bulletin_id = pseudo.get_bulletin_id($1) ORDER BY added ASC", BULLETIN_TOKEN)
+            async for v in cur:
+                line = f"{v['number']},\"{v['pseudonym']}\",\"{v['content'] if v['content'] is not None else ''}\",{v['added']}\n"
+                yield line
+
+async def message_board_csv(req):
+    generator = voters_as_csv()
+    return StreamingResponse(generator, 
+                            media_type='text/csv',
+                            headers={
+                                'Content-Disposition': 'attachment;filename=message-board.csv',
+                                'Cache-Control': 'no-store'
+                            })
+
 async def startup():
     """
     Initialize app.
@@ -638,6 +656,7 @@ routes = [
     
     Route('/dynamic/{filename}', serve_i18n_javacript),
     Route('/audit/{token}', audit_bulletin),
+    Route('/message-board.csv', message_board_csv),
 ]
 
 locale_sub_routes = [
