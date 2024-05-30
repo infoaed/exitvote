@@ -120,9 +120,18 @@ async def subscribe_bulletin(req):
     """
     # token = req.path_params['token']
     token = BULLETIN_TOKEN
-    
+    if "last_vote_number" in req.query_params:
+        try:
+            last_vote_number = int(req.query_params['last_vote_number'])
+        except:
+            last_vote_number = None
+    else:
+        last_vote_number = None
+
     async with app.state.pool.acquire() as con:
         res = await con.fetchrow("SELECT token, start, finish, encrypt_ballots FROM pseudo.bulletin WHERE id = pseudo.get_bulletin_id($1)", token)
+        if last_vote_number is not None:
+            new_votes = await con.fetch("SELECT pseudonym, content, number FROM pseudo.vote WHERE number > $1 and added < $2", last_vote_number, res['finish'])
 
     channel, start, end, encrypt_ballots = res['token'], res['start'], res['finish'], res['encrypt_ballots']
 
@@ -137,6 +146,17 @@ async def subscribe_bulletin(req):
     # kui tuleb uus kuulaja ja kanalil on juba teavitus soolas, siis saab ta selle sealt
     # juba möödunud tähtaja teavituse saab uutele kohe edastada
     # tuleb lisada kanalile ootele ainult tulevad teavitused pärast kontrolli, kas pole juba soolas
+    if (len(new_votes) > 0):
+        for vote in new_votes:
+            res = {"state": "incoming-vote"}
+            res["record"] = {
+                "pseudonym": vote['pseudonym'],
+                "content": vote['content'],
+                "number": vote['number'],
+            }
+            res["token"] = channel
+            cq.put_nowait(res)
+    
     if already_passed(end):
         announce_event_individual("end", end, cq, channel)
     elif already_passed(start):
@@ -232,65 +252,54 @@ async def collector(req):
     
     if title is None:
         title = ""
-        
-    transaction_timestamp, latest_timestamp, started, ended, votes = await votes_until_now(token, bulletin_id, start, end, encrypt_ballots)
     
-    timing = {'transaction': datetime_representation(transaction_timestamp), 'latest': datetime_representation(latest_timestamp) if latest_timestamp is not None else None, 'started': started, 'ended': ended}
-    
-    return templates.TemplateResponse('collect.html', {'request': req, 'pseudonym': pseudonym, 'votes': votes, 'timing': timing, 'choices': choices, 'bulletin_title': title, 'mute_unlisted': mute_unlisted, 'limit_choices': limit_choices, 'metadata_params': {'created': created, "start": start, "end": end, "choices": choices, "token": token}, "token": token, 'locale': current_locale.get().language})
-
-async def votes_until_now(token = None, bulletin_id = None, start = None, end = None, encrypt_ballots = None):
-    """
-    Displays bulletin board in TEXT format up to current moment. This is used as an easy way to display bulletin board history in vote collector TEXTAREA without extra work on client side, maybe ideally should be replaced with feeding the events from certain point in history and ensuring there are no gaps in bulletin board.
-    """
     now = datetime.now().astimezone()
-        
+
+    votes, transaction_timestamp = await get_votes_for_message_board(start, end, encrypt_ballots)
+
+    # Create text for initial message board
+    votes_str = ""
+    if (now > start):
+        votes_str += "=== STARTED: " + datetime_representation(start) + " ===" + '\n'
+        started = True
+    else:
+        started = False
+
+    for vote in votes:
+        votes_str += f"{vote['number']}) {vote['pseudonym']}: {vote['content'] if vote['content'] is not None else ''}\n"
+
+    if (now > end):
+        votes_str += "=== FINISHED: " + datetime_representation(end) + " ===" + '\n'
+        ended = True
+    else:
+        ended = False
+
+    votes_str += "=== BULLETIN: " + datetime_representation(transaction_timestamp) + " ===" + '\n'
+
+    if len(votes) > 0:
+        last_vote_number = votes[-1]['number']
+        last_vote_added = votes[-1]['added']
+    else:
+        last_vote_number = None
+        last_vote_added = None
+
+    timing = {'transaction': datetime_representation(transaction_timestamp), 'latest': datetime_representation(last_vote_added) if last_vote_added is not None else None, 'started': started, 'ended': ended}
+    
+    return templates.TemplateResponse('collect.html', {'request': req, 'pseudonym': pseudonym, 'timing': timing, 'votes': votes_str, 'last_vote_number': last_vote_number, 'choices': choices, 'bulletin_title': title, 'mute_unlisted': mute_unlisted, 'limit_choices': limit_choices, 'metadata_params': {'created': created, "start": start, "end": end, "choices": choices, "token": token}, "token": token, 'locale': current_locale.get().language})
+
+async def get_votes_for_message_board(start = None, end = None, encrypt_ballots = None):
+
     if encrypt_ballots and (end is None or end is not None and now < end):
         ballot_field = "content_hash"
     else:
         ballot_field = "content"
 
     async with app.state.pool.acquire() as con:
-        if bulletin_id is not None:
             async with con.transaction():
-                res = await con.fetch(f"SELECT pseudonym, {ballot_field} as content, added, number FROM pseudo.vote WHERE bulletin_id = $1 ORDER BY added ASC", bulletin_id)
-                transaction_timestamp = await con.fetchval("SELECT TRANSACTION_TIMESTAMP()")
-        else:
-            async with con.transaction():
-                res = await con.fetch(f"SELECT pseudonym, {ballot_field} as content, added, number FROM pseudo.vote WHERE bulletin_id = pseudo.get_bulletin_id($1) ORDER BY added ASC", token)
+                votes = await con.fetch(f"SELECT pseudonym, {ballot_field} as content, added, number FROM pseudo.vote WHERE added BETWEEN $1 AND $2 ORDER BY added ASC LIMIT 300", start, end)
                 transaction_timestamp = await con.fetchval("SELECT TRANSACTION_TIMESTAMP()")
     
-    votes = ""
-    
-    latest_timestamp = None
-    server_now = transaction_timestamp
-    started = ended = False
-    start_str = "=== STARTED: " + datetime_representation(start) + " ===" + '\n'
-    end_str = "=== FINISHED: " + datetime_representation(end) + " ===" + '\n'
-    
-    for v in res:
-        if start is not None and not started:
-            if v['added'] > start:
-                votes += start_str
-                started = True
-        if end is not None and not ended:
-            if v['added'] > end:
-                votes += end_str
-                ended = True
-        votes += f"{v['number']}) {v['pseudonym']}: {v['content'] if v['content'] is not None else ''}\n"
-        latest_timestamp = v['added']
-    
-    if not started and server_now >= start:
-        votes += start_str
-        started = True
-
-    if started and not ended and server_now >= end:
-        votes += end_str
-        ended = True
-        
-    votes += "=== BULLETIN: " + datetime_representation(transaction_timestamp) + " ===" + '\n'
-        
-    return transaction_timestamp, latest_timestamp, started, ended, votes
+    return votes, transaction_timestamp
 
 async def data_for_bulletin(token = None, bulletin_id = None, pseudonym = ""):
     """
@@ -538,7 +547,7 @@ async def serve_i18n_javacript(req):
     """
     Since Javascript i18n is always painful, just cut the Gordian knot with serving scripts as translatable templates.
     """
-    accepted = ['collect.js', 'index.js', 'audit.js']
+    accepted = ['collect.js', 'index.js', 'audit.js', 'message-board.js']
 
     filename = req.path_params['filename']
     

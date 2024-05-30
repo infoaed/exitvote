@@ -15,10 +15,12 @@
     {% block static -%}
     {{ super() -}}
     <script>
-      let bulletin_timing = JSON.parse(`{{ timing|tojson }}`);
+      let bulletin_timing = JSON.parse('{{ timing|tojson }}');
+      let last_vote_number = {{ last_vote_number or 'null' }};
       let limit_choices = {{ "true" if limit_choices else "false" }};
     </script>
     <script src="/static/sse.js"></script>
+    <script src="/{{ locale }}/dynamic/message-board.js"></script>
     <script src="/{{ locale }}/dynamic/collect.js"></script>
     {% endblock static -%}
     

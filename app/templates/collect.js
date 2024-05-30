@@ -1,5 +1,4 @@
 var votesform = null;
-var votesIncoming = null;
 var submit = null;
 var content = null;
 var message = null;
@@ -21,45 +20,48 @@ function setCountDown(wt, wtclass, st, stclass, target) {
   waitTextClass = wtclass;
   successText = st;
   successTextClass = stclass;
-  
+
   setTimeout(countDownTimer);
 }
 
 function pad(n) {
-  return (n < 10 ? "0" + n : n);
+  return n < 10 ? '0' + n : n;
 }
-    
+
 function countDownTimer() {
   let now = new Date();
   if (countdownTarget > now) {
-
     var distance = countdownTarget - now;
 
     var days = Math.floor(distance / (1000 * 60 * 60 * 24));
-    var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    var hours = Math.floor(
+      (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+    );
     var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
     var seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-    var text = "";
-          
+    var text = '';
+
     if (days >= 1) {
-      text = days + " " + '{{ _("days") }}';
+      text = days + ' ' + '{{ _("days") }}';
     } else if (days > 0) {
-      text = hours + " " + '{{ _("hours") }}';
+      text = hours + ' ' + '{{ _("hours") }}';
     } else if (hours > 0) {
-      text = hours + ":" + pad(minutes) + ":" + pad(seconds);
+      text = hours + ':' + pad(minutes) + ':' + pad(seconds);
     } else if (minutes > 0) {
-      text = minutes + ":" + pad(seconds);
+      text = minutes + ':' + pad(seconds);
     } else {
-      text = seconds + " " + '{{ _("seconds") }}';
+      text = seconds + ' ' + '{{ _("seconds") }}';
     }
 
-    countdown.innerHTML = `<span class="${dark_mode ? 'dark-mode ': ''}${waitTextClass}">${waitText}${text}</span>`;
+    countdown.innerHTML = `<span class="${
+      dark_mode ? 'dark-mode ' : ''
+    }${waitTextClass}">${waitText}${text}</span>`;
     setTimeout(countDownTimer, 1000);
   } else {
-    
-    countdown.innerHTML = `<span class="${dark_mode ? 'dark-mode ': ''}${successTextClass}">${successText}</span>`;
-    
+    countdown.innerHTML = `<span class="${
+      dark_mode ? 'dark-mode ' : ''
+    }${successTextClass}">${successText}</span>`;
   }
 }
 
@@ -68,67 +70,68 @@ function countDownTimer() {
 let choices_are_valid = false;
 let valid_choices = null;
 
-function fillBallot () {
-  let v = document.getElementsByClassName("choice");
-  
-  let ballot="";
-  
+function fillBallot() {
+  let v = document.getElementsByClassName('choice');
+
+  let ballot = '';
+
   if (valid_choices == null) {
     valid_choices = Array(v.length);
   }
-  
+
   for (let i = 0; i < v.length; i++) {
-    
     if (v.length > 1) {
-      if (ballot.length != 0) ballot +="; ";
+      if (ballot.length != 0) ballot += '; ';
     }
-    
-    let c = v[i].getElementsByTagName("INPUT");
-    
+
+    let c = v[i].getElementsByTagName('INPUT');
+
     ordered = v[i].dataset.ordered;
     min = v[i].dataset.min;
     max = v[i].dataset.max;
-    
-    var line = "";
-    
+
+    var line = '';
+
     let check_count = 0;
-    for (var j = 0; j < c.length; j++) {      
+    for (var j = 0; j < c.length; j++) {
       let input = c[j];
-      
+
       if (input.checked == true) {
-        if (line.length != 0) line +=", ";
-        if (ordered == "true") line += (j+1) + ") ";
+        if (line.length != 0) line += ', ';
+        if (ordered == 'true') line += j + 1 + ') ';
         line += input.value;
         check_count++;
       } else {
         if (ordered == true) break;
       }
     }
-    
+
     valid_choices[i] = check_count >= min && check_count <= max;
-    
+
     if (v.length > 1) {
-      if (line.length == 0) line = (i+1) + ".";
-      else line = (i+1) + ". " + line;
+      if (line.length == 0) line = i + 1 + '.';
+      else line = i + 1 + '. ' + line;
     }
-                    
+
     ballot += line;
   }
-  
+
   choices_are_valid = !valid_choices.includes(false);
-  
+
   document.vote_form.content.value = ballot;
   enableSubmit();
 }
 
 function enumerateCheckBoxes(rad, list) {
-  document.vote_form.content.value="";
+  document.vote_form.content.value = '';
 
   for (var i = 0; i < rad.length; i++) {
-    if (rad[i].checked){
-      list.children[i].value = i+1;
-      if (document.vote_form.content.value.length > 0) document.vote_form.content.value += ", ";
-      document.vote_form.content.value += list.children[i].value + ") " + rad[i].value;
+    if (rad[i].checked) {
+      list.children[i].value = i + 1;
+      if (document.vote_form.content.value.length > 0)
+        document.vote_form.content.value += ', ';
+      document.vote_form.content.value +=
+        list.children[i].value + ') ' + rad[i].value;
     }
   }
 }
@@ -137,15 +140,14 @@ function enumerateCheckBoxes(rad, list) {
 
 var dragging = null;
 
-document.addEventListener('drag', function(e) {
+document.addEventListener('drag', function (e) {
   e.target.style.opacity = '0.0';
 });
 
-document.addEventListener('dragstart', function(e) {
-    dragging = getLI(e.target);
-    e.dataTransfer.effectAllowed = "move";
-    e.dataTransfer.setData('text/plain', null);
-
+document.addEventListener('dragstart', function (e) {
+  dragging = getLI(e.target);
+  e.dataTransfer.effectAllowed = 'move';
+  e.dataTransfer.setData('text/plain', null);
 });
 
 function isBefore(el1, el2) {
@@ -158,31 +160,34 @@ function isBefore(el1, el2) {
   return false;
 }
 
-document.addEventListener('dragover', function(e) {
-    e.preventDefault();
-    
-    if (e.target.draggable && dragging.parentNode === e.target.parentNode){
-      if (isBefore(dragging, e.target)) {
-        e.target.parentNode.insertBefore(dragging, e.target);
-      } else {
-        e.target.parentNode.insertBefore(dragging, e.target.nextSibling);
-      }
+document.addEventListener('dragover', function (e) {
+  e.preventDefault();
+
+  if (e.target.draggable && dragging.parentNode === e.target.parentNode) {
+    if (isBefore(dragging, e.target)) {
+      e.target.parentNode.insertBefore(dragging, e.target);
+    } else {
+      e.target.parentNode.insertBefore(dragging, e.target.nextSibling);
     }
+  }
 });
 
-document.addEventListener('drop', function(e) {
-    e.preventDefault();
-    
-    dragging.style.opacity = '1.0';
-    var list = dragging.parentNode;
-    var rad = list.getElementsByTagName('input');
-    
-    enumerateCheckBoxes(rad, list);
-    fillBallot();
+document.addEventListener('drop', function (e) {
+  e.preventDefault();
+
+  dragging.style.opacity = '1.0';
+  var list = dragging.parentNode;
+  var rad = list.getElementsByTagName('input');
+
+  enumerateCheckBoxes(rad, list);
+  fillBallot();
 });
 
 function getLI(t) {
-  while( t.nodeName.toLowerCase() != 'li' && t.nodeName.toLowerCase() != 'body' ) {
+  while (
+    t.nodeName.toLowerCase() != 'li' &&
+    t.nodeName.toLowerCase() != 'body'
+  ) {
     t = t.parentNode;
   }
   if (t.nodeName.toLowerCase() == 'body') {
@@ -191,13 +196,12 @@ function getLI(t) {
   return t;
 }
 
-
 /* generic */
 
 function enableSubmit() {
-  let submit = document.getElementById("submit");
-  let pseudonym = document.getElementById("pseudonym");
-  
+  let submit = document.getElementById('submit');
+  let pseudonym = document.getElementById('pseudonym');
+
   if (pseudonym.value.length == 0) {
     submit.disabled = true;
   } else {
@@ -209,13 +213,6 @@ function enableSubmit() {
   }
 }
 
-function scrollVotesToEnd() {
-  if (!votesIncoming.contains(document.activeElement)) {
-    votesIncoming.scrollTop = votesIncoming.scrollHeight;
-  }
-}
-
-
 function status_message(text, css_class, title, force_title) {
   if (title == null) {
     title = `{{ _("Server response") }}`;
@@ -225,209 +222,127 @@ function status_message(text, css_class, title, force_title) {
 
 /* main logic in init function */
 
-function init(){
+function init() {
   // console.log("init-start");
-  
+
   init_darkmode();
-  
-  choices_helper = document.getElementById("choices_helper");
+
+  choices_helper = document.getElementById('choices_helper');
   disableElements(choices_helper.children, false);
-  
-  votesIncoming = document.getElementById("votes");
-  use_bottom_edge(votesIncoming);
-  content = document.getElementById("content");
+
+  content = document.getElementById('content');
   use_bottom_edge(content);
-  
-  noscript_client = document.getElementById("noscript_client");
+
+  noscript_client = document.getElementById('noscript_client');
   if (noscript_client) {
-    noscript_client.value=false;
-    noscript_client.disabled=true;
+    noscript_client.value = false;
+    noscript_client.disabled = true;
   }
-  
-  response_area = document.getElementById("response_fs");
-  response_status = document.getElementById("response");
-  response_title = document.getElementById("response_title");
-  done_area = document.getElementById("done_area");
 
-  let bulletin_token = document.getElementById("bulletin_token").value;
-  
-  message = document.getElementById("message");
+  response_area = document.getElementById('response_fs');
+  response_status = document.getElementById('response');
+  response_title = document.getElementById('response_title');
+  done_area = document.getElementById('done_area');
 
-  source = new SSE('/api/bulletin');
+  let bulletin_token = document.getElementById('bulletin_token').value;
 
-  countdown = document.getElementById("countdown");
+  message = document.getElementById('message');
 
-  votesform = document.getElementById("vote_form");
-  submit = document.getElementById("submit");
+  countdown = document.getElementById('countdown');
 
-  let pseudonym = document.getElementById("pseudonym");
+  votesform = document.getElementById('vote_form');
+  submit = document.getElementById('submit');
+
+  let pseudonym = document.getElementById('pseudonym');
   enableSubmit(submit, pseudonym);
-  
-  pseudonym.oninput = function(e) {
+
+  pseudonym.oninput = function (e) {
     enableSubmit(submit, pseudonym);
   };
 
-  content.onchange = function(e) {
+  content.onchange = function (e) {
     enableSubmit(submit, pseudonym);
   };
 
-
-  votesform.onsubmit = function(e) {
+  votesform.onsubmit = function (e) {
     e.preventDefault();
 
     let pseudonym = document.getElementById('pseudonym').value;
     let votes = document.getElementById('content').value;
-      
+
     const XHR = new XMLHttpRequest();
     const FD = new FormData(votesform);
 
     XHR.onload = function () {
+      var sedel = document.getElementById('content');
+      var freeze = document.getElementById('freeze');
 
-      var sedel = document.getElementById("content");
-      var freeze = document.getElementById("freeze");
-
-      if(XHR.status != 200) {
-        status_message(`ERROR ${XHR.status}: ${XHR.statusText}<br/>`, "cautious");
-        status_message('{{ _("You may want to try again after checking connection status and/or server limits!") }}<br/>');
-        
+      if (XHR.status != 200) {
+        status_message(
+          `ERROR ${XHR.status}: ${XHR.statusText}<br/>`,
+          'cautious'
+        );
+        status_message(
+          '{{ _("You may want to try again after checking connection status and/or server limits!") }}<br/>'
+        );
       } else {
-        
         const json = JSON.parse(XHR.responseText);
-        if (!("state" in json)) {
-          status_message(`ERROR ${XHR.status}: ${XHR.statusText}<br/>`, "cautious");
-          status_message('{{ _("You may want to try again after checking connection status and/or server limits!") }}<br/>');
+        if (!('state' in json)) {
+          status_message(
+            `ERROR ${XHR.status}: ${XHR.statusText}<br/>`,
+            'cautious'
+          );
+          status_message(
+            '{{ _("You may want to try again after checking connection status and/or server limits!") }}<br/>'
+          );
           console.log(`REFUSED: ${JSON.stringify(json)}`);
           return;
         }
-        
+
         const state = json.state;
         const STATE = state.toUpperCase();
-        
+
         console.log(`${STATE}: ${JSON.stringify(json)}`);
 
-        if (state == "recorded") {
-        
-          status_message(JSON.stringify(JSON.parse(XHR.responseText), undefined, "\u200B"), null, `{{ _("Receipt of your submitted vote") }}`, true);
-          submit.disabled=true;
-          sedel.readOnly=true;
-          sedel.classList.add("lucky-bg");
-          submit.value='{{ _("Ballot submitted!") }}';
+        if (state == 'recorded') {
+          status_message(
+            JSON.stringify(JSON.parse(XHR.responseText), undefined, '\u200B'),
+            null,
+            `{{ _("Receipt of your submitted vote") }}`,
+            true
+          );
+          submit.disabled = true;
+          sedel.readOnly = true;
+          sedel.classList.add('lucky-bg');
+          submit.value = '{{ _("Ballot submitted!") }}';
           disableElements(freeze.children, true, [document.vote_form.content]);
 
           //status_message("<br/>" + `{{ _("Thank you for taking digital democracy seriously!") }}`);
-          
         } else {
-          
-          status_message(JSON.stringify(JSON.parse(XHR.responseText), undefined, "\u200B"), null, `{{ _("Receipt of your submitted vote") }}`, true);
-          submit.disabled=true;
-          sedel.readOnly=true;
-          sedel.classList.add("cautious-bg");
-          submit.value='{{ _("Ballot submitted!") }}';
+          status_message(
+            JSON.stringify(JSON.parse(XHR.responseText), undefined, '\u200B'),
+            null,
+            `{{ _("Receipt of your submitted vote") }}`,
+            true
+          );
+          submit.disabled = true;
+          sedel.readOnly = true;
+          sedel.classList.add('cautious-bg');
+          submit.value = '{{ _("Ballot submitted!") }}';
           disableElements(freeze.children, true, [document.vote_form.content]);
-
         }
       }
-      
     }; // onload
 
-
-    XHR.onerror = function() {
-      console.log("Request failed with " + XHR.status +": " + XHR.statusText);
+    XHR.onerror = function () {
+      console.log('Request failed with ' + XHR.status + ': ' + XHR.statusText);
     };
 
-    XHR.open( "POST", "/api/vote" );
-    
-    XHR.send(FD);
+    XHR.open('POST', '/api/vote');
 
+    XHR.send(FD);
   };
 
-  function closeBulletinStream() {
-    source.close();
-    votesIncoming.value += "=== DISCONNECTED: " + new Date().toLocaleString() + " ===\n";
-    votesIncoming.value += '\n{{ _("Thank you for taking digital democracy seriously!") }}\n\n';
-    scrollVotesToEnd();
-  }
-  
-  source.onmessage = function(evt) {
-    const raw = evt.data;
-    
-    if(!raw.startsWith("{")) {
-      
-      //console.log(raw);
-      
-    } else {
-      
-      const json = JSON.parse(raw);
-      if (!("state" in json && "data" in json)) {
-        status_message(JSON.stringify(json));
-        return;
-      }
-      
-      const data = json.data;
-      
-      const state = json.state;
-      const STATE = state.toUpperCase();
-      
-      console.log(`${STATE} ${JSON.stringify(json.data)}`);
-
-      if (state == "end") {
-        if (!bulletin_timing.ended) {
-          let ended_time = new Date(data.timestamp);
-          votesIncoming.value += `=== FINISHED: ${ended_time.toLocaleString()} ===\n`;
-        }
-
-        let grace = 5*60;
-        console.log(`CLOSING ${source.url} in ${grace} seconds.`);
-        bulletin_ended = true;
-        setTimeout(closeBulletinStream, grace * 1000);
-        
-      } else if (state == "wait-start") {
-        setCountDown( '{{ _("Starting in") }} ', "cautious", '{{ _("Voting started!") }}', "lucky", data.timestamp);
-
-      } else if (state == "wait-end") {
-        if (!bulletin_timing.started) {
-          let start_time = new Date(data.started);
-          votesIncoming.value += `=== STARTED: ${start_time.toLocaleString()} ===\n`;
-        }
-        
-        setCountDown('{{ _("Ending in") }} ', "lucky", '{{ _("Voting finished!") }}', "trapped", data.timestamp);
-        
-      } else if (state == "incoming-vote") {
-        votesIncoming.value += `${data.number}) ${data.pseudonym}: ${data.content}\n`;
-        scrollVotesToEnd();
-        
-      } else if ("state" in data) {
-        votesIncoming.value += `${STATE}: ${JSON.stringify(data)}\n`;
-        
-      } else {
-        votesIncoming.value += `${JSON.stringify(data)}\n`;
-      }
-    }
-       
-  }; // onmessage
-
-  source.onerror = function(e) {
-    
-    if (e.readyState == EventSource.CONNECTING) {
-      if (!!e.prevReadyState) {
-        votesIncoming.value += "=== RECONNECTING: " + new Date().toLocaleString() + " ===\n";
-        scrollVotesToEnd();
-      }
-      
-    } else if (e.readyState == EventSource.OPEN) {
-      votesIncoming.value += "=== CONNECTED: " + new Date().toLocaleString() + " ===\n";
-      scrollVotesToEnd();
-    
-    } else if (!bulletin_ended && e.readyState == EventSource.CLOSED) {
-      votesIncoming.value += "=== DISCONNECTED: " + new Date().toLocaleString() + " ===\n";
-      scrollVotesToEnd();
-    }
-    
-  }; // onError
-
-  source.stream();
-
-  scrollVotesToEnd();
-  
+  init_message_board();
   // console.log("init-done");
 }
